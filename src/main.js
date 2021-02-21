@@ -17,14 +17,19 @@
 */
 import Vue from 'vue'
 import App from './App.vue'
+import awsconfig from './aws-exports';
+import Amplify from 'aws-amplify'
 import router from './router'
 import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
+import { store } from './store/store'
 
 Vue.config.productionTip = false
+Amplify.configure(awsconfig)
 
 Vue.use(ArgonDashboard)
 new Vue({
   router,
+  store: store,
   render: h => h(App)
 }).$mount('#app')

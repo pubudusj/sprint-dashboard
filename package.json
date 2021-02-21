@@ -9,6 +9,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "aws-amplify": "^3.3.20",
+    "aws-amplify-vue": "^2.1.5",
     "bootstrap": "4.5.0",
     "bootstrap-vue": "2.15.0",
     "chart.js": "2.9.3",
@@ -21,7 +23,9 @@
     "vue-clipboard2": "0.3.1",
     "vue-flatpickr-component": "8.1.5",
     "vue-router": "3.3.4",
-    "vue2-transitions": "0.3.0"
+    "vue2-transitions": "0.3.0",
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.6",
