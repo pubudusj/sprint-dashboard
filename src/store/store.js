@@ -28,6 +28,8 @@ export const store = new Vuex.Store({
                   name: user.attributes.email,
                   firstName: '',
                   lastName: '',
+                  department: '',
+                  designation: '',
               }
             })
             // await api.fetchUserProfile(loginuser.id).then(user => {

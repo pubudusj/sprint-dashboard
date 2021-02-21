@@ -31,7 +31,7 @@
                     <div class="col-xl-3">
                         <div class="copyright text-center text-xl-left text-muted">
                             &copy; {{year}} <a href="https://linkedin.com/in/pubudusj" class="font-weight-bold ml-1"
-                                               target="_blank">PubuduSJ</a>
+                                               target="_blank">Pubudu</a>
                         </div>
                     </div>
                     <div class="col-xl-3">
