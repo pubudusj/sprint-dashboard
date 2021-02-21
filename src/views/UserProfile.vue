@@ -44,7 +44,7 @@
                                         <div class="col-lg-12">
                                             <base-input alternative=""
                                                         label="New Password"
-                                                        placeholder="Minimum 6 characters"
+                                                        placeholder="Minimum 8 characters"
                                                         input-classes="form-control-alternative"
                                                         v-model="changePassword.newPassword"
                                             />
@@ -181,7 +181,8 @@ import api from './../api/api'
                     newPassword: '',
                     newPasswordConfirmation: '',
                 }
-            }).catch(() => {
+            }).catch((e) => {
+                console.log(e)
                 this.changePasswordMessage = {
                     message: 'Failed to update password.',
                     type: 'danger',
@@ -191,7 +192,7 @@ import api from './../api/api'
         validateChangePasswordForm() {
             return (
                 this.changePassword.currentPassword.length > 0 &&
-                this.changePassword.newPassword.length > 6 &&
+                this.changePassword.newPassword.length > 8 &&
                 this.changePassword.newPassword === this.changePassword.newPasswordConfirmation
             );
         }
