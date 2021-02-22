@@ -1,4 +1,4 @@
-import { Auth } from "aws-amplify";
+import { Auth } from "aws-amplify"
 import admin_api from './admin_api'
 
 export default {
@@ -18,7 +18,7 @@ export default {
         return Auth.completeNewPassword(
             user,
             password
-          );
+          )
     },
 
     async createNewUser(user) {
@@ -27,6 +27,10 @@ export default {
 
     async addUserToUsersGroup(user) {
         return admin_api.addUserToGroup(user.email, 'Users')
+    },
+
+    async getUserGroups(user) {
+        return admin_api.getUserGroups(user.email)
     }
 
     // async fetchUserProfile(userId) {

@@ -16,7 +16,7 @@
 
         <!-- <sidebar-item :link="{name: 'Icons', icon: 'ni ni-planet text-blue', path: '/icons'}"/>
         <sidebar-item :link="{name: 'Maps', icon: 'ni ni-pin-3 text-orange', path: '/maps'}"/> -->
-        <sidebar-item :link="{name: 'Create User', icon: 'ni ni-circle-08 text-pink', path: '/create-user'}"/>
+        <sidebar-item v-if="userIsAdmin" :link="{name: 'Create User', icon: 'ni ni-circle-08 text-pink', path: '/create-user'}"/>
         <!-- <sidebar-item :link="{name: 'Tables', icon: 'ni ni-bullet-list-67 text-red', path: '/tables'}"/>
         <sidebar-item :link="{name: 'Login', icon: 'ni ni-key-25 text-info', path: '/login'}"/> -->
         <sidebar-item :link="{name: 'My Profile', icon: 'ni ni-single-02 text-yellow', path: '/profile'}"/>
@@ -49,6 +49,7 @@
     },
     data() {
       return {
+        userIsAdmin: false,
         sidebarBackground: 'vue' //vue|blue|orange|green|red|primary
       };
     },
@@ -58,7 +59,10 @@
           this.$sidebar.displaySidebar(false);
         }
       }
-    }
+    },
+    created() {
+      this.userIsAdmin = this.$store.getters.isLoginUserAdmin;
+    },
   };
 </script>
 <style lang="scss">

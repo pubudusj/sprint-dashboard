@@ -26,20 +26,21 @@ export const store = new Vuex.Store({
                   id: user.attributes.sub,
                   email: user.attributes.email,
                   name: user.attributes.email,
+                  groups: user.signInUserSession.accessToken.payload["cognito:groups"],
                   firstName: '',
                   lastName: '',
                   department: '',
                   designation: '',
               }
             })
-            // await api.fetchUserProfile(loginuser.id).then(user => {
-            //     // TODO: call profile api
-            //   })
             commit('setLoginUser', loginuser)
             return loginuser
           },
     },
     getters: {
-        loginUser: state => state.loginUser
+        loginUser: state => state.loginUser,
+        isLoginUserAdmin: state => {
+            return state.loginUser.groups.contains('Admins')
+        }
     }
 })

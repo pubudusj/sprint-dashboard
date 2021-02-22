@@ -1,10 +1,11 @@
-import Vue from "vue";
-import { Auth } from "aws-amplify";
-import Router from "vue-router";
-import DashboardLayout from "@/layout/DashboardLayout";
-import AuthLayout from "@/layout/AuthLayout";
+import Vue from "vue"
+import { Auth } from "aws-amplify"
+import Router from "vue-router"
+import DashboardLayout from "@/layout/DashboardLayout"
+import AuthLayout from "@/layout/AuthLayout"
+import { store } from './store/store.js'
 
-Vue.use(Router);
+Vue.use(Router)
 
 const routes = [
   {
@@ -18,13 +19,10 @@ const routes = [
         meta: {
           requiredAuth: true,
         },
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
         component: () =>
           import("./views/Dashboard.vue"),
       },
-      {
+      {//TODO: remove
         path: "/icons",
         name: "icons",
         component: () =>
@@ -33,26 +31,39 @@ const routes = [
       {
         path: "/profile",
         name: "profile",
+        meta: {
+          requiredAuth: true,
+        },
         component: () =>
           import("./views/UserProfile.vue"),
       },
       {
         path: "/create-user",
         name: "create user",
+        meta: {
+          requiredAuth: true,
+          onlyAdmin: true,
+        },
         component: () =>
           import("./views/CreateUser.vue"),
       },
-      {
+      {//TODO: remove
         path: "/maps",
         name: "maps",
         component: () =>
           import("./views/Maps.vue"),
       },
-      {
+      {//TODO: remove
         path: "/tables",
         name: "tables",
         component: () =>
           import("./views/Tables.vue"),
+      },
+      {
+        path: "/restricted",
+        name: "restricted",
+        component: () =>
+          import("./views/Restricted.vue"),
       },
       {
         path: "/logout",
@@ -79,7 +90,7 @@ const routes = [
         component: () =>
           import("./views/Login.vue"),
       },
-      {
+      { //TODO: remove
         path: "/register",
         name: "register",
         component: () =>
@@ -87,37 +98,50 @@ const routes = [
       },
     ],
   },
-];
+]
 
 const router = new Router({
   linkExactActiveClass: "active",
   routes: routes,
-});
+})
 
 router.beforeResolve((to, from, next) => {
-  if (to.matched.some((recored) => recored.meta.requiredAuth)) {
+  if (to.matched.some((record) => record.meta.requiredAuth)) {
     Auth.currentAuthenticatedUser()
       .then(() => {
-        next();
+        if (to.matched.some((record) => record.meta.onlyAdmin)) {
+          try {
+            if (!store.getters.isLoginUserAdmin) {
+              next({
+                path: "/restricted",
+              })
+            }
+          } catch {
+            next({
+              path: "/",
+            })
+          }
+        }
+        next()
       })
       .catch(() => {
         next({
           path: "/login",
-        });
-      });
+        })
+      })
   }
-  if (to.matched.some((recored) => recored.meta.requiredNonAuth)) {
+  if (to.matched.some((record) => record.meta.requiredNonAuth)) {
     Auth.currentAuthenticatedUser()
       .then(() => {
         next({
           path: "/dashboard",
-        });
+        })
       })
       .catch(() => {
-        next();
-      });
+        next()
+      })
   }
-  next();
-});
+  next()
+})
 
-export default router;
+export default router

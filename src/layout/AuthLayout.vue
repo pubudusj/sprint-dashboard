@@ -30,14 +30,14 @@
                 <div class="row align-items-center justify-content-xl-between">
                     <div class="col-xl-3">
                         <div class="copyright text-center text-xl-left text-muted">
-                            &copy; {{year}} <a href="https://linkedin.com/in/pubudusj" class="font-weight-bold ml-1"
+                            &copy; {{year}} Developed By <a href="https://linkedin.com/in/pubudusj" class="font-weight-bold ml-1"
                                                target="_blank">Pubudu</a>
                         </div>
                     </div>
                     <div class="col-xl-3">
                         <div class="copyright text-center text-xl-left text-muted">
                             Theme By <a href="https://www.creative-tim.com" class="font-weight-bold ml-1"
-                                               target="_blank">Creattive Tim</a>
+                                               target="_blank">Creative Tim</a>
                         </div>
                     </div>
                     <div class="col-xl-2">

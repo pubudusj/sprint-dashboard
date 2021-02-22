@@ -1,4 +1,4 @@
-import { Auth, API } from "aws-amplify";
+import { Auth, API } from "aws-amplify"
 
 export default {
   async createUser(userEmail) {
@@ -15,7 +15,7 @@ export default {
           .getJwtToken()}`,
       },
     };
-    return await API.post(apiName, path, data);
+    return await API.post(apiName, path, data)
   },
 
   async addUserToGroup(userEmail, group) {
@@ -24,7 +24,7 @@ export default {
     let data = {
       body: {
         username: userEmail,
-        groupname: group
+        groupname: group,
       },
       headers: {
         "Content-Type": "application/json",
@@ -33,6 +33,23 @@ export default {
           .getJwtToken()}`,
       },
     };
-    return await API.post(apiName, path, data);
+    return await API.post(apiName, path, data)
+  },
+
+  async getUserGroups(userEmail) {
+    let apiName = "AdminQueries";
+    let path = "/listGroupsForUser";
+    let data = {
+      body: {
+        username: userEmail,
+      },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${(await Auth.currentSession())
+          .getAccessToken()
+          .getJwtToken()}`,
+      },
+    };
+    return await API.get(apiName, path, data)
   },
 };
