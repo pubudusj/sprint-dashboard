@@ -1,14 +1,23 @@
 {
   "function": {
-    "sprintdashboard34543847CustomMessage": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "sprintdashboard34543847PostConfirmation": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "AdminQueriesa0c6c8a8": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "sprintdashboard34543847",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
     }
   },
   "auth": {
@@ -16,15 +25,6 @@
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "sprintdashboard34543847CustomMessage",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        },
         {
           "category": "function",
           "resourceName": "sprintdashboard34543847PostConfirmation",
@@ -49,6 +49,29 @@
             "AppClientIDWeb",
             "AppClientID",
             "IdentityPoolId"
+          ]
+        }
+      ]
+    }
+  },
+  "api": {
+    "AdminQueries": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "sprintdashboard34543847",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "AdminQueriesa0c6c8a8",
+          "attributes": [
+            "Arn",
+            "Name"
           ]
         }
       ]

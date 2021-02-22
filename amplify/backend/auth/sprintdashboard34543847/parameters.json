@@ -12,7 +12,7 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code at MySprintDashboard",
+    "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
@@ -49,7 +49,7 @@
     "usernameAttributes": [
         "email"
     ],
-    "triggers": "{\n  \"CustomMessage\": [\n    \"verification-link\"\n  ],\n  \"PostConfirmation\": [\n    \"add-to-group\"\n  ]\n}",
+    "triggers": "{\n  \"PostConfirmation\": [\n    \"add-to-group\"\n  ]\n}",
     "userPoolGroupList": [
         "Users",
         "Admins"
@@ -66,15 +66,6 @@
     "dependsOn": [
         {
             "category": "function",
-            "resourceName": "sprintdashboard34543847CustomMessage",
-            "triggerProvider": "Cognito",
-            "attributes": [
-                "Arn",
-                "Name"
-            ]
-        },
-        {
-            "category": "function",
             "resourceName": "sprintdashboard34543847PostConfirmation",
             "triggerProvider": "Cognito",
             "attributes": [
@@ -83,9 +74,10 @@
             ]
         }
     ],
-    "thirdPartyAuth": false,
-    "userPoolGroups": true,
-    "adminQueries": false,
+    "userPoolGroups": false,
+    "adminQueries": true,
     "hostedUI": false,
-    "authProviders": []
+    "authProviders": [],
+    "thirdPartyAuth": false,
+    "adminQueryGroup": "Admins"
 }

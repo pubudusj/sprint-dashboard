@@ -11,16 +11,6 @@ Parameters:
   
   
   
-  functionsprintdashboard34543847CustomMessageArn:
-    Type: String
-    Default: functionsprintdashboard34543847CustomMessageArn
-  
-  functionsprintdashboard34543847CustomMessageName:
-    Type: String
-    Default: functionsprintdashboard34543847CustomMessageName
-  
-  
-  
   functionsprintdashboard34543847PostConfirmationArn:
     Type: String
     Default: functionsprintdashboard34543847PostConfirmationArn
@@ -172,10 +162,6 @@ Parameters:
     Type: CommaDelimitedList
       
   
-  thirdPartyAuth:
-    Type: String
-            
-  
   userPoolGroups:
     Type: String
             
@@ -187,11 +173,18 @@ Parameters:
   hostedUI:
     Type: String
             
-            
         
   authProviders:
     Type: CommaDelimitedList
       
+  
+  thirdPartyAuth:
+    Type: String
+            
+  adminQueryGroup:
+    Type: String
+  
+            
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
   
@@ -276,8 +269,6 @@ Resources:
       LambdaConfig:
         
         
-          CustomMessage: !Ref functionsprintdashboard34543847CustomMessageArn
-        
         
         
         
@@ -313,15 +304,6 @@ Resources:
     
   
   
-  
-  UserPoolCustomMessageLambdaInvokePermission:
-    Type: "AWS::Lambda::Permission"
-    DependsOn: UserPool
-    Properties:
-      Action: "lambda:invokeFunction"
-      Principal: "cognito-idp.amazonaws.com"
-      FunctionName: !Ref functionsprintdashboard34543847CustomMessageName
-      SourceArn: !GetAtt UserPool.Arn
   
   
   

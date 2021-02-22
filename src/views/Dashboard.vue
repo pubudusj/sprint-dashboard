@@ -1,6 +1,11 @@
 <template>
   <div>
-    <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
+    <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-6">
+    <div class="container-fluid d-flex">
+        <div class="row">
+          <h3 class="display-4 text-white">Welcome {{ user.name }}</h3>
+        </div>
+      </div>
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-3 col-lg-6">
@@ -90,9 +95,17 @@ import Activities from "./Dashboard/Activities";
 import MyTickets from "./Dashboard/MyTickets";
 
 export default {
+  data() {
+    return {
+      user: {}
+    }
+  },
   components: {
     Activities,
     MyTickets
+  },
+  created() {
+    this.user = this.$store.getters.loginUser;
   },
 };
 </script>
