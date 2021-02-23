@@ -128,9 +128,9 @@ export default {
       } else {
       Auth
         .forgotPasswordSubmit(
-          this.verifyPassword.email,
-          this.verifyPassword.code,
-          this.verifyPassword.newPassword
+          this.verifyPassword.email.trim(),
+          this.verifyPassword.code.trim(),
+          this.verifyPassword.newPassword.trim()
         )
         .then(() => {
           this.verifyPasswordMessage = {
