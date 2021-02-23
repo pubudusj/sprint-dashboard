@@ -52,4 +52,35 @@ export default {
     };
     return await API.get(apiName, path, data)
   },
+
+  async getAllUsers() {
+    let apiName = "AdminQueries";
+    let path = "/listUsers";
+    let data = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${(await Auth.currentSession())
+          .getAccessToken()
+          .getJwtToken()}`,
+      },
+    };
+    return await API.get(apiName, path, data)
+  },
+
+  async getAllUsersByGroup(group) {
+    let apiName = "AdminQueries";
+    let path = "/listUsersInGroup";
+    let data = {
+      queryStringParameters: {
+        groupname: group,
+      },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${(await Auth.currentSession())
+          .getAccessToken()
+          .getJwtToken()}`,
+      },
+    };
+    return await API.get(apiName, path, data)
+  },
 };

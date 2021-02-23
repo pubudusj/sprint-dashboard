@@ -95,17 +95,14 @@ import Activities from "./Dashboard/Activities";
 import MyTickets from "./Dashboard/MyTickets";
 
 export default {
-  data() {
-    return {
-      user: {}
-    }
-  },
   components: {
     Activities,
     MyTickets
   },
-  created() {
-    this.user = this.$store.getters.loginUser;
+  computed: {
+    user() { 
+      return this.$store.getters.loginUser 
+    }
   },
 };
 </script>

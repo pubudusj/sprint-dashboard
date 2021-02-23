@@ -251,6 +251,16 @@ async function createUser(username) {
     Username: username,
     TemporaryPassword: Math.random().toString(36).substr(2, 10),
     DesiredDeliveryMediums: ["EMAIL"],
+    UserAttributes: [ 
+      { 
+         "Name": "email_verified",
+         "Value": "True"
+      },
+      { 
+        "Name": "email",
+        "Value": username
+     }
+   ],
   };
 
   console.log(`Attempting to create user ${username}`);
@@ -259,7 +269,7 @@ async function createUser(username) {
     const result = await cognitoIdentityServiceProvider.adminCreateUser(params).promise();
     console.log(`User created ${username}`);
     return {
-      message: `User created ${username}`,
+      message: result.User.Attributes,
     };
   } catch (err) {
     console.log(err);

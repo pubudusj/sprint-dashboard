@@ -113,8 +113,15 @@ export default {
       } else {
       api
         .createNewUser(this.user)
-        .then(() => {
+        .then((data) => {
           api.addUserToUsersGroup(this.user)
+          api.createUserProfile({
+            firstname: this.user.firstName,
+            lastname: this.user.lastName,
+            designation: this.user.designation,
+            department: this.user.department,
+            id: data.message.find((x) => x.Name === "sub").Value
+          })
           this.message = {
             message: "User created successfully.",
             type: "success",

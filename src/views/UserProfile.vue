@@ -9,7 +9,7 @@
       <!-- Header container -->
       <div class="container-fluid d-flex align-items-center">
         <div class="row">
-          <div class="col-lg-7 col-md-10">
+          <div class="col-lg-12 col-md-10">
             <h1 class="display-2 text-white">Hello {{ user.name }}</h1>
           </div>
         </div>
@@ -40,6 +40,7 @@
                       <base-input
                         alternative=""
                         label="Current Password"
+                        type="password"
                         input-classes="form-control-alternative"
                         v-model="changePassword.currentPassword"
                       />
@@ -50,6 +51,7 @@
                       <base-input
                         alternative=""
                         label="New Password"
+                        type="password"
                         placeholder="Minimum 8 characters"
                         input-classes="form-control-alternative"
                         v-model="changePassword.newPassword"
@@ -61,6 +63,7 @@
                       <base-input
                         alternative=""
                         label="Repeat New Password"
+                        type="password"
                         input-classes="form-control-alternative"
                         v-model="changePassword.newPasswordConfirmation"
                       />
@@ -81,6 +84,11 @@
                   <h3 class="mb-0">My account</h3>
                 </div>
               </div>
+            </div>
+            <div v-if="profileMessage">
+              <base-alert :type="profileMessage.type">{{
+                profileMessage.message
+              }}</base-alert>
             </div>
             <template>
               <form @submit.prevent>
@@ -168,7 +176,27 @@ export default {
     };
   },
   methods: {
-    async updateProfile() {},
+    async updateProfile() {
+      try {
+        await api.updateUser({
+            id: this.user.id,
+            firstname: this.user.firstName,
+            lastname: this.user.lastName,
+            designation: this.user.designation,
+            department: this.user.department,
+          })
+        this.profileMessage = {
+            message: "Profile updated successfully.",
+            type: "success",
+          };
+      } catch (e) {
+          console.log(e);
+          this.profileMessage = {
+            message: "Failed to update profile.",
+            type: "danger",
+          }
+        }
+    },
     async updatePassword() {
       this.changePasswordMessage = null;
 
@@ -182,8 +210,8 @@ export default {
       api
         .updatePassword(
           currentUser,
-          this.changePassword.currentPassword,
-          this.changePassword.newPassword
+          this.changePassword.currentPassword.trim(),
+          this.changePassword.newPassword.trim()
         )
         .then(() => {
           this.changePasswordMessage = {
@@ -207,10 +235,10 @@ export default {
     },
     validateChangePasswordForm() {
       return (
-        this.changePassword.currentPassword.length > 0 &&
-        this.changePassword.newPassword.length > 8 &&
-        this.changePassword.newPassword ===
-          this.changePassword.newPasswordConfirmation
+        this.changePassword.currentPassword.trim().length > 0 &&
+        this.changePassword.newPassword.trim().length > 8 &&
+        this.changePassword.newPassword.trim() ===
+          this.changePassword.newPasswordConfirmation.trim()
       );
     },
   },

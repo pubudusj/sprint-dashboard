@@ -47,6 +47,16 @@ const routes = [
         component: () =>
           import("./views/CreateUser.vue"),
       },
+      {
+        path: "/users",
+        name: "user list",
+        meta: {
+          requiredAuth: true,
+          onlyAdmin: true,
+        },
+        component: () =>
+          import("./views/UserList.vue"),
+      },
       {//TODO: remove
         path: "/maps",
         name: "maps",
@@ -90,6 +100,15 @@ const routes = [
         component: () =>
           import("./views/Login.vue"),
       },
+      {
+        path: "/forgot-password",
+        name: "forgot password",
+        meta: {
+          requiredNonAuth: true,
+        },
+        component: () =>
+          import("./views/ForgotPassword.vue"),
+      },
       { //TODO: remove
         path: "/register",
         name: "register",
@@ -111,7 +130,7 @@ router.beforeResolve((to, from, next) => {
       .then(() => {
         if (to.matched.some((record) => record.meta.onlyAdmin)) {
           try {
-            if (!store.getters.isLoginUserAdmin) {
+            if (!store.getters['isLoginUserAdmin']) {
               next({
                 path: "/restricted",
               })

@@ -82,7 +82,7 @@
       <div class="row mt-3">
         <div class="col-sm"></div>
         <div class="col-sm">
-          <a href="#" class="text-light"><small>Forgot password?</small></a>
+          <router-link to="forgot-password"><small>Forgot password?</small></router-link>
         </div>
         <div class="col-sm"></div>
       </div>
@@ -116,12 +116,12 @@ export default {
   },
   methods: {
     async signIn() {
-      if (this.model.email == "" || this.model.password == "") {
+      if (this.model.email.trim() == "" || this.model.password.trim() == "") {
         this.alertText = "Username and password required."
       } else {
         try {
           const { email, password } = this.model
-          let signin = await Auth.signIn(email, password)
+          let signin = await Auth.signIn(email.trim(), password.trim())
           if (signin.challengeName === "NEW_PASSWORD_REQUIRED") {
             this.changePasswordUser = signin
             this.showVerificationForm = true
@@ -159,8 +159,9 @@ export default {
             newPassword: "",
             newPasswordConfirmation: "",
           };
-          this.$store.dispatch('fetchLoginUser')
-          router.push({ name: "dashboard" })
+          this.$store.dispatch('fetchLoginUser').then(() => {
+              router.push({ name: "dashboard" })
+          })
         })
         .catch((e) => {
           console.log(e);
@@ -173,10 +174,10 @@ export default {
     },
     validateChangePasswordForm() {
       return (
-        this.changePassword.currentPassword.length > 0 &&
-        this.changePassword.newPassword.length > 8 &&
-        this.changePassword.newPassword ===
-          this.changePassword.newPasswordConfirmation
+        this.changePassword.currentPassword.trim().length > 0 &&
+        this.changePassword.newPassword.trim().length > 8 &&
+        this.changePassword.newPassword.trim() ===
+          this.changePassword.newPasswordConfirmation.trim()
       );
     },
   },

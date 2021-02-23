@@ -1,0 +1,45 @@
+type User @model 
+{
+  id: ID!
+  firstname: String
+  lastname: String
+  department: String
+  designation: String
+  verified: Boolean
+}
+
+type Sprint @model {
+  id: ID!
+  title: String!
+  description: String
+  startAt: Int!
+  endAt: Int!
+  isCurrent: Boolean!
+  archived: Boolean!
+  createdBy: User! @connection
+  tickets: [SprintTickets] @connection(keyName: "bySprint", fields: ["id"])
+}
+
+type Ticket @model {
+  id: ID!
+  title: String!
+  description: String
+  points: Int
+  priority: String!
+  type: String!
+  status: String!
+  reportBy: User! @connection
+  assignee: User  @connection
+  sprints: [SprintTickets] @connection(keyName: "byTicket", fields: ["id"])
+}
+
+type SprintTickets
+  @model(queries:null)
+  @key(name: "bySprint", fields: ["sprintId", "ticketId"])
+  @key(name: "byTicket", fields: ["ticketId", "sprintId"]) {
+  id: ID!
+  sprintId: ID!
+  ticketId: ID!
+  ticket: Ticket! @connection(fields: ["ticketId"])
+  sprint: Sprint! @connection(fields: ["sprintId"])
+}
