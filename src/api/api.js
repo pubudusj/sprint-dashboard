@@ -62,5 +62,9 @@ export default {
 
     async updateUser(data) {
         return graphql_api.updateUser(data)
+    },
+
+    async createSprint(data) {
+        return graphql_api.createSprint(data)
     }
 }

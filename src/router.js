@@ -57,6 +57,25 @@ const routes = [
         component: () =>
           import("./views/UserList.vue"),
       },
+      {
+        path: "/create-sprint",
+        name: "create sprint",
+        meta: {
+          requiredAuth: true,
+          onlyAdmin: true,
+        },
+        component: () =>
+          import("./views/CreateSprint.vue"),
+      },
+      {
+        path: "/backlog",
+        name: "Backlog",
+        meta: {
+          requiredAuth: true,
+        },
+        component: () =>
+          import("./views/Backlog.vue"),
+      },
       {//TODO: remove
         path: "/maps",
         name: "maps",

@@ -29,4 +29,11 @@ export default {
             variables: {input: userData},
         });
     },
+
+    async createSprint(data) {
+        return await API.graphql({
+            query: mutations.createSprint,
+            variables: {input: data},
+        });
+    },
 }

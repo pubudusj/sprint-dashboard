@@ -13,13 +13,16 @@
             path: '/dashboard'
           }"
         />
-
+        <sidebar-item :link="{name: 'Backlog', icon: 'ni ni-circle-08 text-pink', path: '/backlog'}"/>
         <!-- <sidebar-item :link="{name: 'Icons', icon: 'ni ni-planet text-blue', path: '/icons'}"/>
         <sidebar-item :link="{name: 'Maps', icon: 'ni ni-pin-3 text-orange', path: '/maps'}"/> -->
+        <sidebar-item v-if="userIsAdmin" :link="{name: 'Create Sprint', icon: 'ni ni-circle-08 text-pink', path: '/create-sprint'}"/>
+        <div class="dropdown-divider"></div>
         <sidebar-item v-if="userIsAdmin" :link="{name: 'Create User', icon: 'ni ni-circle-08 text-pink', path: '/create-user'}"/>
         <sidebar-item v-if="userIsAdmin" :link="{name: 'Manage Users', icon: 'ni ni-circle-08 text-pink', path: '/users'}"/>
         <!-- <sidebar-item :link="{name: 'Tables', icon: 'ni ni-bullet-list-67 text-red', path: '/tables'}"/>
         <sidebar-item :link="{name: 'Login', icon: 'ni ni-key-25 text-info', path: '/login'}"/> -->
+        <div class="dropdown-divider"></div>
         <sidebar-item :link="{name: 'My Profile', icon: 'ni ni-single-02 text-yellow', path: '/profile'}"/>
 
       </template>
