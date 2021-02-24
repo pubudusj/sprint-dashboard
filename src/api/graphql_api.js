@@ -36,4 +36,17 @@ export default {
             variables: {input: data},
         });
     },
+
+    async updateSprint(data) {
+        return await API.graphql({
+            query: mutations.updateSprint,
+            variables: {input: data},
+        });
+    },
+
+    async fetchAllSprints() {
+        return await API.graphql({
+            query: queries.listSprints,
+        });
+    },
 }

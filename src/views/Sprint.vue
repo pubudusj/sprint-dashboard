@@ -1,47 +1,67 @@
 <template>
-  <div class="card">
+  <div class="card mb-4">
     <div class="card-header border-0">
       <div class="row align-items-center">
         <div class="col">
           <h3 class="mb-0">Sprint {{ sprint.title }}</h3>
         </div>
+        <div v-if="sprint.isCurrent" class="col">
+          <badge type="info">Current Sprint</badge>
+        </div>
+        <div v-if="sprint.archived" class="col">
+          <badge type="danger">Archived</badge>
+        </div>
         <div class="col text-right">
-          <a href="#!" class="btn btn-sm btn-primary">See all</a>
+          <h5 class="mb-0">Start - {{ sprint.startAt }} </h5>
+        </div>
+        <div class="col text-right">
+          <h5 class="mb-0">End - {{ sprint.endAt }} </h5>
+        </div>
+        <div class="col text-right">
+          <router-link :to="{ name: 'edit sprint', params: { id: sprint.id }}" >
+            <base-button v-if="!sprint.archived" size="sm" type="primary">Edit</base-button>
+          </router-link>
         </div>
       </div>
     </div>
-
     <div class="table-responsive">
       <base-table thead-classes="thead-light"
                   :data="tableData">
         <template slot="columns">
-          <th>Page name</th>
-          <th>Visitors</th>
-          <th>Unique users</th>
-          <th>Bounce rate</th>
+          <th>Title</th>
+          <th>Type</th>
+          <th>Asignee</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Points</th>
+          <th></th>
         </template>
 
         <template slot-scope="{row}">
           <th scope="row">
-            {{row.page}}
+            {{row.title}}
           </th>
           <td>
-            {{row.visitors}}
+            {{row.type}}
           </td>
           <td>
-            {{row.unique}}
+            {{row.asignee}}
           </td>
           <td>
-            <i class="fas fa-arrow-up text-success mr-3"
-               :class="row.bounceRateDirection === 'up' ? 'text-success': 'text-danger'">
-            </i>
-            {{row.bounceRate}}
+            {{row.priority}}
+          </td>
+          <td>
+            {{row.status}}
+          </td>
+          <td>
+            {{row.points}}
+          </td>
+          <td>
+            <base-button size="sm" outline type="info">View</base-button>
           </td>
         </template>
-
       </base-table>
     </div>
-
   </div>
 </template>
 <script>

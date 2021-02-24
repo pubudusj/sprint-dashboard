@@ -17,6 +17,7 @@ export const store = new Vuex.Store({
     allUsers: [],
     adminUsers: [],
     allUserProfiles: [],
+    allSprints: [],
   },
   mutations: {
     setLoginUser(state, data) {
@@ -30,6 +31,9 @@ export const store = new Vuex.Store({
     },
     setAllUserProfiles(state, data) {
       state["allUserProfiles"] = data;
+    },
+    setAllSprints(state, data) {
+      state["allSprints"] = data;
     },
   },
   actions: {
@@ -118,13 +122,31 @@ export const store = new Vuex.Store({
       });
 
       return users;
-    }
+    },
 
+    async fetchAllSprints({ commit }) {
+      let sprints = [];
+      await api.getAllSprints().then((data) => {
+      try {
+          sprints = data.data.listSprints.items;
+      } catch (e) {
+        console.log(e);
+      }
+      commit("setAllSprints", sprints);
+    });
+
+    return sprints;
+  }
   },
   getters: {
     loginUser: (state) => state.loginUser,
     isLoginUserAdmin: (state) => {
       return state.loginUser.groups && state.loginUser.groups.includes("Admins");
     },
+    getSprintById(state){
+       return function (id) {
+          return state.allSprints && state.allSprints.find(x => x.id === id)
+       };       
+    }
   },
 });

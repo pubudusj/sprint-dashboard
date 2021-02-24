@@ -68,6 +68,16 @@ const routes = [
           import("./views/CreateSprint.vue"),
       },
       {
+        path: "/edit-sprint/:id",
+        name: "edit sprint",
+        meta: {
+          requiredAuth: true,
+          onlyAdmin: true,
+        },
+        component: () =>
+          import("./views/EditSprint.vue"),
+      },
+      {
         path: "/backlog",
         name: "Backlog",
         meta: {

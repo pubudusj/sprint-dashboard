@@ -66,5 +66,13 @@ export default {
 
     async createSprint(data) {
         return graphql_api.createSprint(data)
+    },
+
+    async updateSprint(data) {
+        return graphql_api.updateSprint(data)
+    },
+
+    async getAllSprints() {
+        return graphql_api.fetchAllSprints()
     }
 }

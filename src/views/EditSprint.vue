@@ -16,7 +16,7 @@
             <div slot="header" class="bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">Create New Sprint</h3>
+                  <h3 class="mb-0">Edit Sprint</h3>
                 </div>
               </div>
             </div>
@@ -64,8 +64,28 @@
                       />
                     </div>
                   </div>
-                  <button v-on:click="createSprint" class="btn btn-info">
-                    Create
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <base-checkbox
+                        :value="sprint.isCurrent"
+                        class="mb-3"
+                        v-model="sprint.isCurrent"
+                        >Set as current ?
+                        {{ sprint.isCurrent ? "Yes" : "No" }}</base-checkbox
+                      >
+                    </div>
+                    <div class="col-lg-6">
+                      <base-checkbox
+                        :value="sprint.archived"
+                        class="mb-3"
+                        v-model="sprint.archived"
+                        >Set as archived ?
+                        {{ sprint.archived ? "Yes" : "No" }}</base-checkbox
+                      >
+                    </div>
+                  </div>
+                  <button v-on:click="updateSprint" class="btn btn-info">
+                    Update
                   </button>
                 </div>
               </form>
@@ -84,17 +104,11 @@ export default {
   name: "create-user",
   data() {
     return {
-      sprint: {
-        title: "",
-        startAt: "",
-        endAt: "",
-        description: "",
-      },
       message: null,
     };
   },
   methods: {
-    async createSprint() {
+    async updateSprint() {
       this.message = null;
 
       if (!this.validateCreateUserForm()) {
@@ -103,30 +117,28 @@ export default {
           type: "danger",
         };
       } else {
-        this.sprint.isCurrent = false;
-        this.sprint.archived = false;
-        this.sprint.startAt = parseInt(this.sprint.startAt);
-        this.sprint.endAt = parseInt(this.sprint.endAt);
-        this.sprint.sprintCreatedById = this.user.id;
+        let updateSprint = {
+          isCurrent: this.sprint.isCurrent,
+          archived: this.sprint.archived,
+          startAt: parseInt(this.sprint.startAt),
+          endAt: parseInt(this.sprint.endAt),
+          id: this.sprint.id,
+          title: this.sprint.title,
+          description: this.sprint.description,
+        };
 
         api
-          .createSprint(this.sprint)
+          .updateSprint(updateSprint)
           .then(() => {
             this.message = {
-              message: "Sprint created successfully.",
+              message: "Sprint updated successfully.",
               type: "success",
-            };
-            this.sprint = {
-              title: "",
-              startAt: "",
-              endAt: "",
-              description: "",
             };
           })
           .catch((e) => {
             console.log(e);
             this.message = {
-              message: "Failed to create new sprint.",
+              message: "Failed to update sprint.",
               type: "danger",
             };
           });
@@ -142,8 +154,8 @@ export default {
     },
   },
   computed: {
-    user() {
-      return this.$store.getters.loginUser;
+    sprint() {
+      return this.$store.getters.getSprintById(this.$route.params.id);
     },
   },
 };
