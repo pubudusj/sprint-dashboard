@@ -51,7 +51,7 @@
                     </div>
                   </div>
                   <div class="row" style="margin-bottom: 20px">
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                       <label class="form-control-label select-label">Type *</label>
                       <base-dropdown>
                         <template v-slot:title>
@@ -73,7 +73,7 @@
                         <div v-for="priority in prioritiesList" v-on:click="assignPriority(priority)" :key="priority.id" class="dropdown-item">{{ priority.title }}</div>
                       </base-dropdown>
                     </div>
-                    <div class="col-lg-5">
+                    <div class="col-lg-4">
                       <label class="form-control-label select-label">Assignee</label>
                       <base-dropdown>
                         <template v-slot:title>

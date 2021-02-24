@@ -127,6 +127,8 @@ export default {
             this.showVerificationForm = true
           } else {
             this.$store.dispatch('fetchLoginUser')
+            this.$store.dispatch('fetchAllSprints')
+            this.$store.dispatch('fetchAllUserProfiles')
             router.push({ name: "dashboard" })
           }
         } catch (e) {
@@ -159,6 +161,8 @@ export default {
             newPassword: "",
             newPasswordConfirmation: "",
           };
+          this.$store.dispatch('fetchAllUserProfiles')
+          this.$store.dispatch('fetchAllSprints')
           this.$store.dispatch('fetchLoginUser').then(() => {
               router.push({ name: "dashboard" })
           })
