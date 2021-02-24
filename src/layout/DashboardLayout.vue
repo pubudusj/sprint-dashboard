@@ -14,10 +14,12 @@
           }"
         />
         <sidebar-item :link="{name: 'Backlog', icon: 'ni ni-circle-08 text-pink', path: '/backlog'}"/>
+        <sidebar-item :link="{name: 'Create Ticket', icon: 'ni ni-circle-08 text-pink', path: '/create-ticket'}"/>
+
         <!-- <sidebar-item :link="{name: 'Icons', icon: 'ni ni-planet text-blue', path: '/icons'}"/>
         <sidebar-item :link="{name: 'Maps', icon: 'ni ni-pin-3 text-orange', path: '/maps'}"/> -->
+        <div v-if="userIsAdmin" class="dropdown-divider"></div>
         <sidebar-item v-if="userIsAdmin" :link="{name: 'Create Sprint', icon: 'ni ni-circle-08 text-pink', path: '/create-sprint'}"/>
-        <div class="dropdown-divider"></div>
         <sidebar-item v-if="userIsAdmin" :link="{name: 'Create User', icon: 'ni ni-circle-08 text-pink', path: '/create-user'}"/>
         <sidebar-item v-if="userIsAdmin" :link="{name: 'Manage Users', icon: 'ni ni-circle-08 text-pink', path: '/users'}"/>
         <!-- <sidebar-item :link="{name: 'Tables', icon: 'ni ni-bullet-list-67 text-red', path: '/tables'}"/>

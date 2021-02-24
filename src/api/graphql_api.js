@@ -49,4 +49,25 @@ export default {
             query: queries.listSprints,
         });
     },
+
+    async createTicket(data) {
+        return await API.graphql({
+            query: mutations.createTicket,
+            variables: {input: data},
+        });
+    },
+
+    async getTicketById(id) {
+        return await API.graphql({
+            query: queries.getTicket,
+            variables: {id: id},
+        });
+    },
+
+    async updateTicket(data) {
+        return await API.graphql({
+            query: mutations.updateTicket,
+            variables: {input: data},
+        });
+    },
 }

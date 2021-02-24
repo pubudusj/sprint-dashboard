@@ -18,6 +18,18 @@ export const store = new Vuex.Store({
     adminUsers: [],
     allUserProfiles: [],
     allSprints: [],
+    ticketTypesList: [
+      { title: 'Bug', id: 'bug' },
+      { title: 'Story', id: 'story' },
+      { title: 'Task', id: 'task'},
+    ],
+    ticketPrioritiesList: [
+      { title: 'Highest', id: 'highest' },
+      { title: 'High', id: 'high' },
+      { title: 'Medium', id: 'medium' },
+      { title: 'Low', id: 'low' },
+      { title: 'Lowest', id: 'lowest'}
+    ]
   },
   mutations: {
     setLoginUser(state, data) {
@@ -147,6 +159,16 @@ export const store = new Vuex.Store({
        return function (id) {
           return state.allSprints && state.allSprints.find(x => x.id === id)
        };       
-    }
+    },
+    getTicketById(state){
+       return function (id) {
+          return state.allSprints && state.allSprints.find(x => x.id === id)
+       };       
+    },
+    ticketPrioritiesList: state => state.ticketPrioritiesList,
+    ticketTypesList: state => state.ticketTypesList,
+    ticketAssignees: (state) => {
+      return state.allUserProfiles.sort((a,b) => a.firstname-b.firstname);
+    },
   },
 });

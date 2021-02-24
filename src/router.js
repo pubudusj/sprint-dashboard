@@ -78,6 +78,24 @@ const routes = [
           import("./views/EditSprint.vue"),
       },
       {
+        path: "/create-ticket",
+        name: "create ticket",
+        meta: {
+          requiredAuth: true,
+        },
+        component: () =>
+          import("./views/CreateTicket.vue"),
+      },
+      {
+        path: "/edit-ticket/:id",
+        name: "edit ticket",
+        meta: {
+          requiredAuth: true,
+        },
+        component: () =>
+          import("./views/EditTicket.vue"),
+      },
+      {
         path: "/backlog",
         name: "Backlog",
         meta: {

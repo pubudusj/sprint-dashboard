@@ -74,5 +74,17 @@ export default {
 
     async getAllSprints() {
         return graphql_api.fetchAllSprints()
-    }
+    },
+
+    async createTicket(data) {
+        return graphql_api.createTicket(data)
+    },
+
+    async getTicketById(id) {
+        return graphql_api.getTicketById(id)
+    },
+
+    async updateTicket(data) {
+        return graphql_api.updateTicket(data)
+    },
 }
