@@ -12,6 +12,7 @@ export const createUser = /* GraphQL */ `
       lastname
       department
       designation
+      verified
       createdAt
       updatedAt
     }
@@ -28,6 +29,7 @@ export const updateUser = /* GraphQL */ `
       lastname
       department
       designation
+      verified
       createdAt
       updatedAt
     }
@@ -44,6 +46,7 @@ export const deleteUser = /* GraphQL */ `
       lastname
       department
       designation
+      verified
       createdAt
       updatedAt
     }
@@ -68,6 +71,7 @@ export const createSprint = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -105,6 +109,7 @@ export const updateSprint = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -142,6 +147,7 @@ export const deleteSprint = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -179,6 +185,7 @@ export const createTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -188,6 +195,7 @@ export const createTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -225,6 +233,7 @@ export const updateTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -234,6 +243,7 @@ export const updateTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -271,6 +281,7 @@ export const deleteTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -280,6 +291,7 @@ export const deleteTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -321,6 +333,7 @@ export const createSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -330,6 +343,7 @@ export const createSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -353,6 +367,7 @@ export const createSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -390,6 +405,7 @@ export const updateSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -399,6 +415,7 @@ export const updateSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -422,6 +439,7 @@ export const updateSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -459,6 +477,7 @@ export const deleteSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -468,6 +487,7 @@ export const deleteSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -491,6 +511,7 @@ export const deleteSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }

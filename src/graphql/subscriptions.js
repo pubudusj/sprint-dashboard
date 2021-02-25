@@ -9,6 +9,7 @@ export const onCreateUser = /* GraphQL */ `
       lastname
       department
       designation
+      verified
       createdAt
       updatedAt
     }
@@ -22,6 +23,7 @@ export const onUpdateUser = /* GraphQL */ `
       lastname
       department
       designation
+      verified
       createdAt
       updatedAt
     }
@@ -35,6 +37,7 @@ export const onDeleteUser = /* GraphQL */ `
       lastname
       department
       designation
+      verified
       createdAt
       updatedAt
     }
@@ -56,6 +59,7 @@ export const onCreateSprint = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -90,6 +94,7 @@ export const onUpdateSprint = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -124,6 +129,7 @@ export const onDeleteSprint = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -158,6 +164,7 @@ export const onCreateTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -167,6 +174,7 @@ export const onCreateTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -201,6 +209,7 @@ export const onUpdateTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -210,6 +219,7 @@ export const onUpdateTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -244,6 +254,7 @@ export const onDeleteTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -253,6 +264,7 @@ export const onDeleteTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -291,6 +303,7 @@ export const onCreateSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -300,6 +313,7 @@ export const onCreateSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -323,6 +337,7 @@ export const onCreateSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -357,6 +372,7 @@ export const onUpdateSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -366,6 +382,7 @@ export const onUpdateSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -389,6 +406,7 @@ export const onUpdateSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -423,6 +441,7 @@ export const onDeleteSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -432,6 +451,7 @@ export const onDeleteSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -455,6 +475,7 @@ export const onDeleteSprintTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }

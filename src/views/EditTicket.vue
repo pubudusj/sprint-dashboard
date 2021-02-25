@@ -52,37 +52,70 @@
                   </div>
                   <div class="row" style="margin-bottom: 20px">
                     <div class="col-lg-3">
-                      <label class="form-control-label select-label">Type *</label>
+                      <label class="form-control-label select-label"
+                        >Type *</label
+                      >
                       <base-dropdown>
                         <template v-slot:title>
                           <base-button type="secondary" class="dropdown-toggle">
                             {{ ticket.type.title }}
                           </base-button>
                         </template>
-                          <div v-for="type in typesList" v-on:click="assignType(type)" :key="type.id" class="dropdown-item">{{ type.title }}</div>
+                        <div
+                          v-for="type in typesList"
+                          v-on:click="assignType(type)"
+                          :key="type.id"
+                          class="dropdown-item"
+                        >
+                          {{ type.title }}
+                        </div>
                       </base-dropdown>
                     </div>
                     <div class="col-lg-4">
-                      <label class="form-control-label select-label">Priority *</label>
+                      <label class="form-control-label select-label"
+                        >Priority *</label
+                      >
                       <base-dropdown>
                         <template v-slot:title>
                           <base-button type="secondary" class="dropdown-toggle">
                             {{ ticket.priority.title }}
                           </base-button>
                         </template>
-                        <div v-for="priority in prioritiesList" v-on:click="assignPriority(priority)" :key="priority.id" class="dropdown-item">{{ priority.title }}</div>
+                        <div
+                          v-for="priority in prioritiesList"
+                          v-on:click="assignPriority(priority)"
+                          :key="priority.id"
+                          class="dropdown-item"
+                        >
+                          {{ priority.title }}
+                        </div>
                       </base-dropdown>
                     </div>
                     <div class="col-lg-5">
-                      <label class="form-control-label select-label">Assignee</label>
+                      <label class="form-control-label select-label"
+                        >Assignee</label
+                      >
                       <base-dropdown>
                         <template v-slot:title>
                           <base-button type="secondary" class="dropdown-toggle">
-                            {{ ticket.assignee ? ticket.assignee.firstname + ' ' + ticket.assignee.lastname : '' }}
+                            {{
+                              ticket.assignee
+                                ? ticket.assignee.firstname +
+                                  " " +
+                                  ticket.assignee.lastname
+                                : ""
+                            }}
                           </base-button>
                         </template>
                         <!-- {{ assigneeList }} -->
-                        <div v-for="assignee in assigneeList" v-on:click="assignAssignee(assignee)" :key="assignee.id" class="dropdown-item">{{ assignee.firstname + ' ' + assignee.lastname }}</div>
+                        <div
+                          v-for="assignee in assigneeList"
+                          v-on:click="assignAssignee(assignee)"
+                          :key="assignee.id"
+                          class="dropdown-item"
+                        >
+                          {{ assignee.firstname + " " + assignee.lastname }}
+                        </div>
                       </base-dropdown>
                     </div>
                     <label class="form-control-label"></label>
@@ -98,8 +131,8 @@
                       />
                     </div>
                   </div>
-                  <button v-on:click="createTicket" class="btn btn-info">
-                    Create
+                  <button v-on:click="updateTicket" class="btn btn-info">
+                    Update
                   </button>
                 </div>
               </form>
@@ -131,7 +164,7 @@ export default {
     };
   },
   methods: {
-    async createTicket() {
+    async updateTicket() {
       this.message = null;
 
       if (!this.validateForm()) {
@@ -147,12 +180,11 @@ export default {
           type: this.ticket.type.id,
           priority: this.ticket.priority.id,
           points: this.ticket.points,
-          status: 'backlog'
-        }
+        };
         if (this.ticket.assignee.id !== null) {
           ticketToSave.ticketAssigneeId = this.ticket.assignee.id;
         } else {
-          ticketToSave.ticketAssigneeId = null
+          ticketToSave.ticketAssigneeId = null;
         }
 
         api
@@ -180,57 +212,62 @@ export default {
       );
     },
     assignType(type) {
-      this.ticket.type = type
+      this.ticket.type = type;
     },
     assignPriority(priority) {
-      this.ticket.priority = priority
+      this.ticket.priority = priority;
     },
     assignAssignee(assignee) {
-      this.ticket.assignee = assignee
-    }
+      this.ticket.assignee = assignee;
+    },
   },
   created() {
     api.getTicketById(this.$route.params.id).then((data) => {
-      let tk = data.data.getTicket
+      let tk = data.data.getTicket;
       this.ticket = {
         id: this.$route.params.id,
         title: tk.title,
         description: tk.description,
-        type: this.typesList.find(type => type.id == tk.type),
-        priority: this.prioritiesList.find(priority => priority.id == tk.priority),
+        type: this.typesList.find((type) => type.id == tk.type),
+        priority: this.prioritiesList.find(
+          (priority) => priority.id == tk.priority
+        ),
         points: tk.points,
-        assignee:  tk.assignee ? this.assigneeList.find(assignee => assignee.id == tk.assignee.id) : {
-          id: null,
-          firstname: 'No assignee',
-          lastname: '',
-        },
-      }
-      console.log(this.ticket)
-    })
+        assignee: tk.assignee
+          ? this.assigneeList.find((assignee) => assignee.id == tk.assignee.id)
+          : {
+              id: null,
+              firstname: "No assignee",
+              lastname: "",
+            },
+      };
+    });
   },
   computed: {
     user() {
       return this.$store.getters.loginUser;
     },
     prioritiesList: function() {
-      return  this.$store.getters.ticketPrioritiesList
+      return this.$store.getters.ticketPrioritiesList;
     },
     typesList: function() {
-      return this.$store.getters.ticketTypesList
+      return this.$store.getters.ticketTypesList;
     },
     assigneeList: function() {
-      let assignees = [{
-        id: null,
-        firstname: 'No assignee',
-        lastname: '',
-      }].concat(this.$store.getters.ticketAssignees)
-      return assignees
-    }
+      let assignees = [
+        {
+          id: null,
+          firstname: "No assignee",
+          lastname: "",
+        },
+      ].concat(this.$store.getters.ticketAssignees);
+      return assignees;
+    },
   },
 };
 </script>
 <style scoped>
-  .select-label {
-    margin-right: 20px;
-  }
+.select-label {
+  margin-right: 20px;
+}
 </style>

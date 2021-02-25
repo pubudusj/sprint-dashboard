@@ -3,7 +3,7 @@
     <div class="card-header border-0">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0">Sprint {{ sprint.title }}</h3>
+          <h3 class="mb-0">{{ sprint.title }}</h3>
         </div>
         <div v-if="sprint.isCurrent" class="col">
           <badge type="info">Current Sprint</badge>
@@ -12,52 +12,83 @@
           <badge type="danger">Archived</badge>
         </div>
         <div class="col text-right">
-          <h5 class="mb-0">Start - {{ sprint.startAt }} </h5>
+          <h5 class="mb-0">
+            {{ sprint.startAt ? "From -" + sprint.startAt : "" }}
+          </h5>
         </div>
         <div class="col text-right">
-          <h5 class="mb-0">End - {{ sprint.endAt }} </h5>
+          <h5 class="mb-0">{{ sprint.endAt ? "To -" + sprint.endAt : "" }}</h5>
         </div>
         <div class="col text-right">
-          <router-link :to="{ name: 'edit sprint', params: { id: sprint.id }}" >
-            <base-button v-if="!sprint.archived" size="sm" type="primary">Edit</base-button>
+          <badge type="primary" class="sprint-points"
+            >Total Points: {{ sprintPoints }}</badge
+          >
+          <router-link :to="{ name: 'edit sprint', params: { id: sprint.id } }">
+            <base-button v-if="!sprint.archived" size="sm" type="warning"
+              >Edit Sprint</base-button
+            >
           </router-link>
         </div>
       </div>
     </div>
     <div class="table-responsive">
-      <base-table thead-classes="thead-light"
-                  :data="tableData">
+      <base-table thead-classes="thead-light" :data="tickets">
         <template slot="columns">
           <th>Title</th>
           <th>Type</th>
-          <th>Asignee</th>
+          <th>Assignee</th>
           <th>Priority</th>
-          <th>Status</th>
+          <th>Stage</th>
           <th>Points</th>
           <th></th>
         </template>
 
-        <template slot-scope="{row}">
+        <template slot-scope="{ row }">
           <th scope="row">
-            {{row.title}}
+            {{ row.ticket.title }}
           </th>
           <td>
-            {{row.type}}
+            {{ getTypeTitle(row.ticket.type) }}
           </td>
           <td>
-            {{row.asignee}}
+            {{ row.ticket.assignee | getFullName }}
           </td>
           <td>
-            {{row.priority}}
+            {{ getPriorityTitle(row.ticket.priority) }}
           </td>
           <td>
-            {{row.status}}
+            {{ getStageTitle(row.ticket.status) }}
           </td>
           <td>
-            {{row.points}}
+            {{ row.ticket.points == 0 ? "" : row.ticket.points }}
           </td>
           <td>
-            <base-button size="sm" outline type="info">View</base-button>
+            <base-dropdown menuClasses="sprint-move">
+              <template v-slot:title>
+                <base-button size="sm" type="secondary" class="dropdown-toggle">
+                  Move To
+                </base-button>
+              </template>
+              <div
+                v-on:click="moveTicket(row.ticket.id, row.id, 'backlog')"
+                class="dropdown-item"
+              >
+                Backlog
+              </div>
+              <div
+                v-on:click="moveTicket(row.ticket.id, row.id, sp.id)"
+                v-for="sp in activeSprintsList"
+                :key="sp.id"
+                class="dropdown-item"
+              >
+                {{ sp.title }}
+              </div>
+            </base-dropdown>
+            <router-link
+              :to="{ name: 'edit ticket', params: { id: row.ticket.id } }"
+            >
+              <base-button size="sm" type="primary">Edit</base-button>
+            </router-link>
           </td>
         </template>
       </base-table>
@@ -65,51 +96,111 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'sprint',
-    props: ["sprint"],
-    data() {
-      return {
-        tableData: [
-          {
-            page: '/argon/',
-            visitors: '4,569',
-            unique: '340',
-            bounceRate: '46,53%',
-            bounceRateDirection: 'up'
-          },
-          {
-            page: '/argon/index.html',
-            visitors: '3,985',
-            unique: '319',
-            bounceRate: '46,53%',
-            bounceRateDirection: 'down'
-          },
-          {
-            page: '/argon/charts.html',
-            visitors: '3,513',
-            unique: '294',
-            bounceRate: '36,49%',
-            bounceRateDirection: 'down'
-          },
-          {
-            page: '/argon/tables.html',
-            visitors: '2,050',
-            unique: '147',
-            bounceRate: '50,87%',
-            bounceRateDirection: 'up'
-          },
-          {
-            page: '/argon/profile.html',
-            visitors: '1,795',
-            unique: '190',
-            bounceRate: '46,53%',
-            bounceRateDirection: 'down'
+import api from "./../api/api";
+import { Hub } from "aws-amplify";
+
+export default {
+  name: "sprint",
+  props: ["sprint", "activeSprints"],
+  computed: {
+    activeSprintsList() {
+      return this.activeSprints.filter((x) => x.id != this.sprint.id);
+    },
+    sprintPoints() {
+      return this.sprint.tickets.items.reduce(
+        (r, d) => r + parseInt(d.ticket.points),
+        0
+      );
+    },
+    tickets() {
+      return this.sprint.tickets.items;
+    },
+    ticketStages() {
+      return this.$store.getters.ticketStagesList;
+    },
+    ticketPriorities() {
+      return this.$store.getters.ticketPrioritiesList;
+    },
+    ticketTypes() {
+      return this.$store.getters.ticketTypesList;
+    },
+    getStageTitle() {
+      return (stage) =>
+        this.ticketStages.find((x) => x.id == stage)
+          ? this.ticketStages.find((x) => x.id == stage).title
+          : "";
+    },
+    getPriorityTitle() {
+      return (stage) => this.ticketPriorities.find((x) => x.id == stage).title;
+    },
+    getTypeTitle() {
+      return (stage) => this.ticketTypes.find((x) => x.id == stage).title;
+    },
+  },
+  filters: {
+    getFullName: function(data) {
+      return data ? data.firstname + " " + data.lastname : "-";
+    },
+  },
+  methods: {
+    moveTicket(ticketId, relationId, to) {
+      api
+        .removeTicketFromSprint({
+          id: relationId,
+        })
+        .then(function() {
+          if (to == "backlog") {
+            api
+              .updateTicket({
+                id: ticketId,
+                status: "backlog",
+              })
+              .then(() => {
+                Hub.dispatch("SprintsChannel", {
+                  event: "ticketMoved",
+                  data: {},
+                  message: "",
+                });
+              });
+          } else {
+            api
+              .addTicketToSprint({
+                sprintId: to,
+                ticketId: ticketId,
+              })
+              .then(function() {
+                api
+                  .updateTicket({
+                    id: ticketId,
+                    status: "todo",
+                  })
+                  .then(() => {
+                    Hub.dispatch("SprintsChannel", {
+                      event: "ticketMoved",
+                      data: {},
+                      message: "",
+                    });
+                  });
+              });
           }
-        ]
-      }
-    }
-  }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+};
 </script>
-<style>
+<style lang="scss">
+.sprint-points {
+  margin-right: 20px;
+  padding: 10px;
+  font-size: 11px;
+}
+.sprint-move {
+  position: inherit;
+}
+.dropdown-item {
+  cursor: pointer;
+}
 </style>

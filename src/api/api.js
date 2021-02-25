@@ -46,8 +46,6 @@ export default {
         return admin_api.addUserToGroup(email, 'Admins')
     },
 
-    // Graphql
-
     async getAllUserProfiles() {
         return graphql_api.fetchAllUsers()
     },
@@ -87,4 +85,16 @@ export default {
     async updateTicket(data) {
         return graphql_api.updateTicket(data)
     },
-}
+
+    async addTicketToSprint(data) {
+        return graphql_api.addTicketToSprint(data)
+    },
+
+    async getBacklogTickets() {
+        return graphql_api.getBacklogTickets()
+    },
+
+    async removeTicketFromSprint(data) {
+        return graphql_api.removeTicketFromSprint(data)
+    },
+ }

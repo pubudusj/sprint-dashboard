@@ -70,4 +70,25 @@ export default {
             variables: {input: data},
         });
     },
+
+    async addTicketToSprint(data) {
+        return await API.graphql({
+            query: mutations.createSprintTickets,
+            variables: {input: data},
+        });
+    },
+
+    async getBacklogTickets() {
+        return await API.graphql({
+            query: queries.listTickets,
+            variables: {filter: {status: {eq:'backlog'}}},
+        });
+    },
+
+    async removeTicketFromSprint(data) {
+        return await API.graphql({
+            query: mutations.deleteSprintTickets,
+            variables: {input: data},
+        });
+    },
 }

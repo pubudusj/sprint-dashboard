@@ -9,6 +9,7 @@ export const getUser = /* GraphQL */ `
       lastname
       department
       designation
+      verified
       createdAt
       updatedAt
     }
@@ -27,6 +28,7 @@ export const listUsers = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -50,6 +52,7 @@ export const getSprint = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -89,10 +92,49 @@ export const listSprints = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
         tickets {
+          items {
+            id
+            sprintId
+            ticketId
+            createdAt
+            updatedAt
+            ticket {
+              assignee {
+                verified
+                updatedAt
+                lastname
+                id
+                firstname
+                designation
+                department
+                createdAt
+              }
+              title
+              type
+              status
+              priority
+              points
+              id
+              description
+              createdAt
+              updatedAt
+              reportBy {
+                createdAt
+                department
+                designation
+                firstname
+                verified
+                updatedAt
+                lastname
+                id
+              }
+            }
+          }
           nextToken
         }
         createdAt
@@ -118,6 +160,7 @@ export const getTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -127,6 +170,7 @@ export const getTicket = /* GraphQL */ `
         lastname
         department
         designation
+        verified
         createdAt
         updatedAt
       }
@@ -166,6 +210,7 @@ export const listTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }
@@ -175,6 +220,7 @@ export const listTickets = /* GraphQL */ `
           lastname
           department
           designation
+          verified
           createdAt
           updatedAt
         }

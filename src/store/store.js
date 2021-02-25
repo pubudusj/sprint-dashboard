@@ -18,18 +18,26 @@ export const store = new Vuex.Store({
     adminUsers: [],
     allUserProfiles: [],
     allSprints: [],
+    allBackendTickets: [],
     ticketTypesList: [
-      { title: 'Bug', id: 'bug' },
-      { title: 'Story', id: 'story' },
-      { title: 'Task', id: 'task'},
+      { title: "Bug", id: "bug" },
+      { title: "Story", id: "story" },
+      { title: "Task", id: "task" },
     ],
     ticketPrioritiesList: [
-      { title: 'Highest', id: 'highest' },
-      { title: 'High', id: 'high' },
-      { title: 'Medium', id: 'medium' },
-      { title: 'Low', id: 'low' },
-      { title: 'Lowest', id: 'lowest'}
-    ]
+      { title: "Highest", id: "highest" },
+      { title: "High", id: "high" },
+      { title: "Medium", id: "medium" },
+      { title: "Low", id: "low" },
+      { title: "Lowest", id: "lowest" },
+    ],
+    ticketStagesList: [
+      { title: "ToDo", id: "todo" },
+      { title: "In Progress", id: "inprogress" },
+      { title: "Review", id: "review" },
+      { title: "Test", id: "test" },
+      { title: "Done", id: "done" },
+    ],
   },
   mutations: {
     setLoginUser(state, data) {
@@ -46,6 +54,9 @@ export const store = new Vuex.Store({
     },
     setAllSprints(state, data) {
       state["allSprints"] = data;
+    },
+    setAllBackendTickets(state, data) {
+      state["allBackendTickets"] = data;
     },
   },
   actions: {
@@ -123,11 +134,11 @@ export const store = new Vuex.Store({
     },
 
     async fetchAllUserProfiles({ commit }) {
-        let users = [];
-        await api.getAllUserProfiles().then((data) => {
+      let users = [];
+      await api.getAllUserProfiles().then((data) => {
         try {
-            users = data.data.listUsers.items;
-            commit("setAllUserProfiles", users);
+          users = data.data.listUsers.items;
+          commit("setAllUserProfiles", users);
         } catch (e) {
           console.log(e);
         }
@@ -139,36 +150,56 @@ export const store = new Vuex.Store({
     async fetchAllSprints({ commit }) {
       let sprints = [];
       await api.getAllSprints().then((data) => {
-      try {
+        try {
           sprints = data.data.listSprints.items;
-      } catch (e) {
-        console.log(e);
-      }
-      commit("setAllSprints", sprints);
-    });
+        } catch (e) {
+          console.log(e);
+        }
+        commit("setAllSprints", sprints);
+      });
 
-    return sprints;
-  }
+      return sprints;
+    },
+
+    async fetchTicketsForBacklog({ commit }) {
+      let tickets = [];
+      await api.getBacklogTickets().then((data) => {
+        try {
+          tickets = data.data.listTickets.items;
+        } catch (e) {
+          console.log(e);
+        }
+        commit("setAllBackendTickets", tickets);
+      });
+
+      return tickets;
+    },
   },
   getters: {
     loginUser: (state) => state.loginUser,
     isLoginUserAdmin: (state) => {
-      return state.loginUser.groups && state.loginUser.groups.includes("Admins");
+      return (
+        state.loginUser.groups && state.loginUser.groups.includes("Admins")
+      );
     },
-    getSprintById(state){
-       return function (id) {
-          return state.allSprints && state.allSprints.find(x => x.id === id)
-       };       
+    getSprintById(state) {
+      return function(id) {
+        return state.allSprints && state.allSprints.find((x) => x.id === id);
+      };
     },
-    getTicketById(state){
-       return function (id) {
-          return state.allSprints && state.allSprints.find(x => x.id === id)
-       };       
+    getAllSprints(state) {
+      return state.allSprints;
     },
-    ticketPrioritiesList: state => state.ticketPrioritiesList,
-    ticketTypesList: state => state.ticketTypesList,
+    getTicketById(state) {
+      return function(id) {
+        return state.allSprints && state.allSprints.find((x) => x.id === id);
+      };
+    },
+    ticketPrioritiesList: (state) => state.ticketPrioritiesList,
+    ticketTypesList: (state) => state.ticketTypesList,
+    ticketStagesList: (state) => state.ticketStagesList,
     ticketAssignees: (state) => {
-      return state.allUserProfiles.sort((a,b) => a.firstname-b.firstname);
+      return state.allUserProfiles.sort((a, b) => a.firstname - b.firstname);
     },
   },
 });

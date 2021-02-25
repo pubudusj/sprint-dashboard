@@ -97,6 +97,17 @@
                         v-model="ticket.points"
                       />
                     </div>
+                    <div class="col-lg-4">
+                      <label class="form-control-label select-label">Sprint</label>
+                      <base-dropdown>
+                        <template v-slot:title>
+                          <base-button type="secondary" class="dropdown-toggle">
+                            {{ ticket.sprint.title }}
+                          </base-button>
+                        </template>
+                        <div v-for="sprint in sprintsList" v-on:click="assignSprint(sprint)" :key="sprint.id" class="dropdown-item">{{ sprint.title }}</div>
+                      </base-dropdown>
+                    </div>
                   </div>
                   <button v-on:click="createTicket" class="btn btn-info">
                     Create
@@ -144,9 +155,16 @@ export default {
           description: this.ticket.description,
           type: this.ticket.type.id,
           priority: this.ticket.priority.id,
-          points: this.ticket.points,
-          status: 'backlog'
+          points: this.ticket.points ? this.ticket.points : 0,
         }
+
+        let sprintId = this.ticket.sprint.id
+        if (sprintId !== null) {
+          ticketToSave.status = 'todo'
+        } else {
+          ticketToSave.status = 'backlog'
+        }
+
         if (this.ticket.assignee.id !== null) {
           ticketToSave.ticketAssigneeId = this.ticket.assignee.id;
         }
@@ -154,7 +172,14 @@ export default {
 
         api
           .createTicket(ticketToSave)
-          .then(() => {
+          .then((data) => {
+            if (sprintId !== null) {
+              api.addTicketToSprint({
+                sprintId: sprintId,
+                ticketId: data.data.createTicket.id
+              })
+            }
+
             this.message = {
               message: "Ticket created successfully.",
               type: "success",
@@ -190,6 +215,9 @@ export default {
     },
     assignAssignee(assignee) {
       this.ticket.assignee = assignee
+    },
+    assignSprint(sprint) {
+      this.ticket.sprint = sprint
     }
   },
   computed: {
@@ -217,6 +245,15 @@ export default {
       let self = this
       self.ticket.assignee = assignees[0]
       return assignees
+    },
+    sprintsList: function() {
+      let sprints = [{
+        id: null,
+        title: 'None',
+      }].concat(this.$store.getters.getAllSprints)
+      let self = this
+      self.ticket.sprint = sprints[0]
+      return sprints.filter((x) => x.archived == false)
     }
   },
 };

@@ -14,7 +14,12 @@
             v-for="(row, index) in activeSprints"
             :key="index"
             :sprint="row"
+            :activeSprints="activeSprints"
           ></sprint>
+          <backlog-tasks
+            :tickets="backlogTickets"
+            :activeSprints="activeSprints"
+          ></backlog-tasks>
           <div v-if="activeSprints.length == 0" class="card-header border-0">
             <div class="row align-items-center">
               <div class="col">
@@ -34,19 +39,25 @@
   </div>
 </template>
 <script>
-// Tables
+import BacklogTasks from "./BacklogTasks.vue";
 import Sprint from "./Sprint";
+import { Hub } from "aws-amplify";
 
 export default {
   data() {
     return {
       sprints: [],
+      bkTickets: [],
     };
   },
   components: {
     Sprint,
+    BacklogTasks,
   },
   computed: {
+    backlogTickets() {
+      return this.bkTickets;
+    },
     activeSprints() {
       return this.sprints
         .filter((sprint) => sprint.archived === false)
@@ -55,9 +66,27 @@ export default {
         );
     },
   },
+  methods: {
+    fetchData() {
+      this.$store.dispatch("fetchAllSprints").then((data) => {
+        this.sprints = data;
+      });
+    },
+    fetchBacklogTickets() {
+      this.$store.dispatch("fetchTicketsForBacklog").then((data) => {
+        this.bkTickets = data;
+      });
+    },
+  },
   created() {
-    this.$store.dispatch("fetchAllSprints").then((data) => {
-      this.sprints = data;
+    this.fetchData();
+    this.fetchBacklogTickets();
+
+    Hub.listen("SprintsChannel", (data) => {
+      if (data.payload.event == "ticketMoved") {
+        this.fetchData();
+        this.fetchBacklogTickets();
+      }
     });
   },
 };

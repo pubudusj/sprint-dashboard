@@ -185,6 +185,7 @@ export default {
             designation: this.user.designation,
             department: this.user.department,
           })
+        this.$store.dispatch('fetchLoginUser')
         this.profileMessage = {
             message: "Profile updated successfully.",
             type: "success",
