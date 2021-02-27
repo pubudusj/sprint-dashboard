@@ -7,10 +7,11 @@
     </base-header>
     <div class="container-fluid mt--7">
       <div class="card mb-4">
-        <div class="card-header border-0">
+        <div v-if="!noSprint" class="card-header border-0">
           <div class="row align-items-center">
             <div class="col">
               <h3 class="mb-0">Current Spint - {{ this.sprint.title }}</h3>
+              <div class="text-sm"><b>Goal: </b>{{ this.sprint.description }}</div>
             </div>
             <div class="col text-right">
               <h5 class="mb-0"></h5>
@@ -23,13 +24,20 @@
                 >Total Points: {{ sprintTotalPoints }}
               </badge>
               <span> </span>
-              <base-button v-if="!sprint.archived" size="sm" type="warning"
-              >Edit Sprint</base-button>
+             <router-link v-if="isLoginUserAdmin && !sprint.archived" :to="{ name: 'edit sprint', params: { id: sprint.id } }">
+              <base-button  size="sm" type="warning">Edit Sprint</base-button>
+              </router-link>
             </div>
           </div>
         </div>
+        
+        <div v-if="noSprint" class="card-header border-0">
+          <base-alert type="danger">
+            <strong>No active sprint found.</strong>
+          </base-alert>
+        </div>
       </div>
-      <div class="">
+      <div v-if="!noSprint" class="">
         <div class="row">
           <div class="col stage-column">
             <div class="col-header">
@@ -201,8 +209,9 @@ import api from "./../api/api";
 export default {
   data() {
     return {
-      sprint: "",
+      sprint: null,
       tickets: [],
+      noCurrentSprint: false,
     };
   },
   components: {
@@ -211,6 +220,12 @@ export default {
     draggable,
   },
   computed: {
+    noSprint() {
+      return this.noCurrentSprint;
+    },
+    isLoginUserAdmin() {
+      return this.$store.getters.isLoginUserAdmin
+    },
     sprintTotalPoints() {
       return this.tickets.reduce((r, d) => r + parseInt(d.ticket.points), 0);
     },
@@ -239,13 +254,13 @@ export default {
   },
   methods: {
     fetchData() {
-      this.$store.dispatch("fetchAllSprints").then((data) => {
-        this.sprint = data.filter((x) => x.isCurrent == true);
-        if (this.sprint[0]) {
-          this.sprint = this.sprint[0];
-          this.tickets = this.sprint.tickets.items;
-        }
-      });
+      let currentSprint = this.$store.getters.currentSprint
+      if (currentSprint) {
+        this.sprint = currentSprint
+        this.tickets = this.sprint.tickets.items;
+      } else {
+        this.noCurrentSprint = true
+      }
     },
     getTicketsByStage(stage) {
       return this.tickets.filter((x) => x.ticket.status == stage);

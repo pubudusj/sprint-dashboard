@@ -17,6 +17,7 @@
           </td>
         </slot>
       </tr>
+      <tr v-if="noDataMessage"><td>{{ noDataMessage }}</td></tr>
     </tbody>
   </table>
 </template>
@@ -48,6 +49,11 @@ export default {
       type: String,
       default: '',
       description: '<tbody> css classes'
+    },
+    noDataMessage: {
+      type: String,
+      default: '',
+      description: 'No data message'
     }
   },
   computed: {

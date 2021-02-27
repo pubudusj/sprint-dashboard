@@ -12,7 +12,7 @@
       </div>
       <div class="col-lg-6">
         <div class="copyright text-center text-lg-left text-muted">
-          Design By<a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a> &
+          Theme <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a> &
           <a href="https://www.binarcode.com" class="font-weight-bold ml-1" target="_blank">Binar Code</a>
         </div>
       </div>

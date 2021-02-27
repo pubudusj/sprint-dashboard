@@ -4,6 +4,7 @@
       <div class="row align-items-center">
         <div class="col">
           <h3 class="mb-0">{{ sprint.title }}</h3>
+          <div class="text-sm"><b>Goal: </b>{{ sprint.description }}</div>
         </div>
         <div v-if="sprint.isCurrent" class="col">
           <badge type="info">Current Sprint</badge>
@@ -23,7 +24,10 @@
           <badge type="primary" class="sprint-points"
             >Total Points: {{ sprintPoints }}</badge
           >
-          <router-link :to="{ name: 'edit sprint', params: { id: sprint.id } }">
+          <router-link
+            v-if="isLoginUserAdmin"
+            :to="{ name: 'edit sprint', params: { id: sprint.id } }"
+          >
             <base-button v-if="!sprint.archived" size="sm" type="warning"
               >Edit Sprint</base-button
             >
@@ -84,11 +88,13 @@
                 {{ sp.title }}
               </div>
             </base-dropdown>
-            <router-link :to="{ name: 'edit ticket', params: { id: row.ticket.id } }">
-            <base-button size="sm" type="primary"
-              ><i class="fa fa-edit"></i
-            ></base-button>
-          </router-link>
+            <router-link
+              :to="{ name: 'edit ticket', params: { id: row.ticket.id } }"
+            >
+              <base-button size="sm" type="primary"
+                ><i class="fa fa-edit"></i
+              ></base-button>
+            </router-link>
           </td>
         </template>
       </base-table>
@@ -103,6 +109,9 @@ export default {
   name: "sprint",
   props: ["sprint", "activeSprints"],
   computed: {
+    isLoginUserAdmin() {
+      return this.$store.getters.isLoginUserAdmin;
+    },
     activeSprintsList() {
       return this.activeSprints.filter((x) => x.id != this.sprint.id);
     },

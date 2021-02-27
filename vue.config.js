@@ -11,7 +11,7 @@ module.exports = {
     ]
   },
   pwa: {
-    name: 'Vue Argon Dashboard',
+    name: 'MySprintDashboard',
     themeColor: '#172b4d',
     msTileColor: '#172b4d',
     appleMobileWebAppCapable: 'yes',

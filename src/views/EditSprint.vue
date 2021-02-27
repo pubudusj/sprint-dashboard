@@ -65,12 +65,12 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" v-if="!currentSprint || (currentSprint && currentSprint.id == sprint.id)">
                       <base-checkbox
                         :value="sprint.isCurrent"
                         class="mb-3"
                         v-model="sprint.isCurrent"
-                        >Set as current ?
+                        ><b>Set as current ?</b>
                         {{ sprint.isCurrent ? "Yes" : "No" }}</base-checkbox
                       >
                     </div>
@@ -79,9 +79,10 @@
                         :value="sprint.archived"
                         class="mb-3"
                         v-model="sprint.archived"
-                        >Set as archived ?
+                        ><b>Set as archived ?</b>
                         {{ sprint.archived ? "Yes" : "No" }}</base-checkbox
                       >
+                      <span class="text-sm text-warning mb-3">* All tickets will be moved to backlog</span>
                     </div>
                   </div>
                   <button v-on:click="updateSprint" class="btn btn-info">
@@ -157,6 +158,9 @@ export default {
     sprint() {
       return this.$store.getters.getSprintById(this.$route.params.id);
     },
+    currentSprint() {
+      return this.$store.getters.currentSprint
+    }
   },
 };
 </script>

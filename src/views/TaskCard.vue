@@ -3,7 +3,7 @@
     <stats-card
       :title="task.title"
       type="gradient-red"
-      class="mb-4 mb-xl-0"
+      class="mb-4 mb-xl-0 title-width"
     >
       <template slot="footer">
         <span
@@ -132,5 +132,8 @@ export default {
 <style scoped>
 .grid {
   cursor: pointer;
+}
+.title-width {
+    max-width: 245px;
 }
 </style>

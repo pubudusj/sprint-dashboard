@@ -15,7 +15,7 @@
           <stats-card
             title="Current Sprint"
             type="gradient-red"
-            :sub-title="currentSprint && currentSprint.title"
+            :sub-title="currentSprint ? currentSprint.title : 'No Active Sprint'"
             icon="ni ni-chart-bar-32"
             class="mb-4 mb-xl-0"
           >
@@ -48,7 +48,7 @@
           </stats-card>
         </div>
         <div class="col-xl-8">
-          <my-tickets :tickets="myTickets"></my-tickets>
+          <my-tickets :tickets="myTickets" :noSprint="!currentSprint"></my-tickets>
         </div>
       </div>
       <!--End tables-->

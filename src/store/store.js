@@ -201,5 +201,6 @@ export const store = new Vuex.Store({
     ticketAssignees: (state) => {
       return state.allUserProfiles.sort((a, b) => a.firstname - b.firstname);
     },
+    currentSprint: (state) => state.allSprints && state.allSprints.find((x) => x.isCurrent == true)
   },
 });
