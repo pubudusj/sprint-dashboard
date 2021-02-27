@@ -194,6 +194,7 @@ export default {
               message: "Ticket updated successfully.",
               type: "success",
             };
+            setTimeout(() => this.$router.push('/backlog'), 500)
           })
           .catch((e) => {
             console.log(e);

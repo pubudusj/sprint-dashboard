@@ -100,6 +100,7 @@
 
 <script>
 import api from "./../api/api";
+import { Hub } from 'aws-amplify'
 
 export default {
   name: "create-user",
@@ -119,7 +120,7 @@ export default {
         };
       } else {
         let updateSprint = {
-          isCurrent: this.sprint.isCurrent,
+          isCurrent: this.sprint.archived == true ? false : this.sprint.isCurrent,
           archived: this.sprint.archived,
           startAt: parseInt(this.sprint.startAt),
           endAt: parseInt(this.sprint.endAt),
@@ -131,10 +132,38 @@ export default {
         api
           .updateSprint(updateSprint)
           .then(() => {
+            // Update tickets
+            if (this.sprint.archived == true && this.sprint.tickets.items.length > 0) {
+              this.sprint.tickets.items.forEach(function(ticket) {
+                console.log(ticket)
+                api
+                  .removeTicketFromSprint({
+                    id: ticket.id,
+                  })
+                  .then(function() {
+                      api
+                        .updateTicket({
+                          id: ticket.ticket.id,
+                          status: "backlog",
+                        })
+                        .then(() => {
+                          Hub.dispatch("SprintsChannel", {
+                            event: "ticketMoved",
+                            data: {},
+                            message: "",
+                          });
+                        });
+              }).catch((e) => {
+                console.log(e)
+              })
+            })
+            }
+
             this.message = {
               message: "Sprint updated successfully.",
               type: "success",
             };
+            setTimeout(() => this.$router.push('/backlog'), 500)
           })
           .catch((e) => {
             console.log(e);

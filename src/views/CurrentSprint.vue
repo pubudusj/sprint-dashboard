@@ -10,7 +10,7 @@
         <div v-if="!noSprint" class="card-header border-0">
           <div class="row align-items-center">
             <div class="col">
-              <h3 class="mb-0">Current Spint - {{ this.sprint.title }}</h3>
+              <h3 class="mb-0">Current Sprint - {{ this.sprint.title }}</h3>
               <div class="text-sm"><b>Goal: </b>{{ this.sprint.description }}</div>
             </div>
             <div class="col text-right">

@@ -4,7 +4,7 @@
       <div class="row align-items-center">
         <div class="col">
           <h3 class="mb-0">{{ sprint.title }}</h3>
-          <div class="text-sm"><b>Goal: </b>{{ sprint.description }}</div>
+          <div class="text-sm text-muted"><b>Goal: </b>{{ sprint.description }}</div>
         </div>
         <div v-if="sprint.isCurrent" class="col">
           <badge type="info">Current Sprint</badge>
@@ -38,7 +38,7 @@
     <div class="table-responsive">
       <base-table thead-classes="thead-light" :data="tickets">
         <template slot="columns">
-          <th>Title</th>
+          <th width="30%">Title</th>
           <th>Type</th>
           <th>Assignee</th>
           <th>Priority</th>
@@ -48,8 +48,8 @@
         </template>
 
         <template slot-scope="{ row }">
-          <th scope="row">
-            {{ row.ticket.title }}
+          <th scope="row" :title="row.ticket.title">
+            {{ row.ticket.title | shorten }}
           </th>
           <td>
             {{ getTypeTitle(row.ticket.type) }}
@@ -150,6 +150,9 @@ export default {
     getFullName: function(data) {
       return data ? data.firstname + " " + data.lastname : "-";
     },
+    shorten: function (data) {
+      return data.length > 50 ? data.substr(0, 50) + '...' : data
+    }
   },
   methods: {
     moveTicket(ticketId, relationId, to) {

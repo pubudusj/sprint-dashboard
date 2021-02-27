@@ -10,7 +10,7 @@
     <div class="table-responsive">
       <base-table thead-classes="thead-light" :data="tickets">
         <template slot="columns">
-          <th>Title</th>
+          <th width="30%">Title</th>
           <th>Type</th>
           <th>Assignee</th>
           <th>Priority</th>
@@ -20,7 +20,7 @@
 
         <template slot-scope="{ row }">
           <th scope="row">
-            {{ row.title }}
+            {{ row.title | shorten }}
           </th>
           <td>
             {{ getTypeTitle(row.type) }}
@@ -35,7 +35,7 @@
             {{ row.points == 0 ? "" : row.points }}
           </td>
           <td>
-            <base-dropdown menuClasses="sprint-move">
+            <base-dropdown menuClasses="sprint-move" v-if="activeSprintsList.length > 0">
               <template v-slot:title>
                 <base-button size="sm" type="secondary" class="dropdown-toggle">
                   Move To
@@ -92,6 +92,9 @@ export default {
     getFullName: function(data) {
       return data ? data.firstname + " " + data.lastname : "-";
     },
+    shorten: function (data) {
+      return data.length > 50 ? data.substr(0, 50) + '...' : data
+    }
   },
   methods: {
     moveTicket(ticketId, to) {

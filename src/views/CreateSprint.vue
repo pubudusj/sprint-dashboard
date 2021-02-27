@@ -122,6 +122,7 @@ export default {
               endAt: "",
               description: "",
             };
+            setTimeout(() => this.$router.push('/backlog'), 500)
           })
           .catch((e) => {
             console.log(e);

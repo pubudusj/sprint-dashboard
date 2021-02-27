@@ -10,17 +10,7 @@
       <!--Tables-->
       <div class="row">
         <div class="col-xl-12 mb-5 mb-xl-0">
-          <sprint
-            v-for="(row, index) in activeSprints"
-            :key="index"
-            :sprint="row"
-            :activeSprints="activeSprints"
-          ></sprint>
-          <backlog-tasks
-            :tickets="backlogTickets"
-            :activeSprints="activeSprints"
-          ></backlog-tasks>
-          <div v-if="activeSprints.length == 0" class="card-header border-0">
+          <div v-if="activeSprints.length == 0" class="card-header border-0 no-active-sprints">
             <div class="row align-items-center">
               <div class="col">
                 <h4 class="mb-0">
@@ -32,6 +22,16 @@
               </div>
             </div>
           </div>
+          <sprint
+            v-for="(row, index) in activeSprints"
+            :key="index"
+            :sprint="row"
+            :activeSprints="activeSprints"
+          ></sprint>
+          <backlog-tasks
+            :tickets="backlogTickets"
+            :activeSprints="activeSprints"
+          ></backlog-tasks>
         </div>
       </div>
       <!--End tables-->
@@ -91,4 +91,9 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped>
+.no-active-sprints {
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+</style>
