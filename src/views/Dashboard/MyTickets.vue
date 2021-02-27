@@ -35,9 +35,11 @@
             {{row.ticket.points}}
           </td>
           <td>
-            <base-button size="sm" type="secondary">
-                  View
-            </base-button>
+            <router-link :to="{ name: 'edit ticket', params: { id: row.ticket.id } }">
+            <base-button size="sm" type="primary"
+              ><i class="fa fa-edit"></i
+            ></base-button>
+          </router-link>
           </td>
         </template>
       </base-table>

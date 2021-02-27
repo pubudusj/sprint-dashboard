@@ -84,11 +84,11 @@
                 {{ sp.title }}
               </div>
             </base-dropdown>
-            <router-link
-              :to="{ name: 'edit ticket', params: { id: row.ticket.id } }"
-            >
-              <base-button size="sm" type="primary">Edit</base-button>
-            </router-link>
+            <router-link :to="{ name: 'edit ticket', params: { id: row.ticket.id } }">
+            <base-button size="sm" type="primary"
+              ><i class="fa fa-edit"></i
+            ></base-button>
+          </router-link>
           </td>
         </template>
       </base-table>
