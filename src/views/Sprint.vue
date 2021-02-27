@@ -40,7 +40,7 @@
         <template slot="columns">
           <th width="30%">Title</th>
           <th>Type</th>
-          <th>Assignee</th>
+          <th width="20%">Assignee</th>
           <th>Priority</th>
           <th>Stage</th>
           <th>Points</th>
@@ -52,19 +52,26 @@
             {{ row.ticket.title | shorten }}
           </th>
           <td>
-            {{ getTypeTitle(row.ticket.type) }}
+            <span
+              :class="taskTypeIcon(row.ticket.type).text + ' mr-2'"
+              :title="getTypeTitle(row.ticket.type)"
+              ><i :class="taskTypeIcon(row.ticket.type).icon"></i>
+              {{ getTypeTitle(row.ticket.type) }}
+            </span>
           </td>
           <td>
             {{ row.ticket.assignee | getFullName }}
           </td>
           <td>
-            {{ getPriorityTitle(row.ticket.priority) }}
+            <badge :type="priorityIcon(row.ticket.priority)">{{
+              getPriorityTitle(row.ticket.priority)
+            }}</badge>
           </td>
           <td>
             {{ getStageTitle(row.ticket.status) }}
           </td>
           <td>
-            {{ row.ticket.points == 0 ? "" : row.ticket.points }}
+            {{ row.ticket.points == 0 ? "-" : row.ticket.points }}
           </td>
           <td>
             <base-dropdown menuClasses="sprint-move">
@@ -144,6 +151,46 @@ export default {
     },
     getTypeTitle() {
       return (stage) => this.ticketTypes.find((x) => x.id == stage).title;
+    },
+    taskTypeIcon: () => {
+      return (type) => {
+        let icon = "fa fa-check-square";
+        let text = "text-primary";
+
+        if (type == "bug") {
+          icon = "fa fa-bug text-danger";
+          text = "text-danger";
+        } else if (type == "task") {
+          icon = "fa fa-check text-primary";
+          text = "text-primary";
+        } else if (type == "story") {
+          icon = "fa fa-bookmark text-success";
+          text = "text-success";
+        }
+
+        return {
+          icon: icon,
+          text: text,
+        };
+      };
+    },
+    priorityIcon: () => {
+      return (priority) => {
+        var color = null;
+        if (priority == "highest") {
+          color = "danger";
+        } else if (priority == "high") {
+          color = "warning";
+        } else if (priority == "medium") {
+          color = "info";
+        } else if (priority == "low") {
+          color = "primary";
+        } else if (priority == "lowest") {
+          color = "success";
+        }
+
+        return color;
+      };
     },
   },
   filters: {

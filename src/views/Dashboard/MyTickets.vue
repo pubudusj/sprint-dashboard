@@ -24,6 +24,7 @@
           <th>Title</th>
           <th>Type</th>
           <th>Priority</th>
+          <th>Stage</th>
           <th>Points</th>
           <th></th>
         </template>
@@ -44,6 +45,9 @@
             <badge :type="priorityIcon(row.ticket.priority)">{{
               getPriorityTitle(row.ticket.priority)
             }}</badge>
+          </td>
+          <td>
+            {{ getStageTitle(row.ticket.status) }}
           </td>
           <td>
             {{ row.ticket.points }}
@@ -131,6 +135,15 @@ export default {
 
         return color;
       };
+    },
+    ticketStages() {
+      return this.$store.getters.ticketStagesList;
+    },
+    getStageTitle() {
+      return (stage) =>
+        this.ticketStages.find((x) => x.id == stage)
+          ? this.ticketStages.find((x) => x.id == stage).title
+          : "";
     },
   },
 };
