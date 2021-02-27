@@ -22,12 +22,6 @@ const routes = [
         component: () =>
           import("./views/Dashboard.vue"),
       },
-      {//TODO: remove
-        path: "/icons",
-        name: "icons",
-        component: () =>
-          import("./views/Icons.vue"),
-      },
       {
         path: "/profile",
         name: "profile",
@@ -113,17 +107,14 @@ const routes = [
         component: () =>
           import("./views/Backlog.vue"),
       },
-      {//TODO: remove
-        path: "/maps",
-        name: "maps",
+      {
+        path: "/archived",
+        name: "past sprints",
+        meta: {
+          requiredAuth: true,
+        },
         component: () =>
-          import("./views/Maps.vue"),
-      },
-      {//TODO: remove
-        path: "/tables",
-        name: "tables",
-        component: () =>
-          import("./views/Tables.vue"),
+          import("./views/ArchivedSprints.vue"),
       },
       {
         path: "/restricted",
@@ -164,12 +155,6 @@ const routes = [
         },
         component: () =>
           import("./views/ForgotPassword.vue"),
-      },
-      { //TODO: remove
-        path: "/register",
-        name: "register",
-        component: () =>
-          import("./views/Register.vue"),
       },
     ],
   },

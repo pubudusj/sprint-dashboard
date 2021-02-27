@@ -32,7 +32,7 @@
                     <div class="col-lg-6">
                       <base-input
                         alternative=""
-                        label="Email address"
+                        label="Email address *"
                         input-classes="form-control-alternative"
                         v-model="user.email"
                       />
@@ -42,7 +42,7 @@
                     <div class="col-lg-6">
                       <base-input
                         alternative=""
-                        label="First name"
+                        label="First name *"
                         input-classes="form-control-alternative"
                         v-model="user.firstName"
                       />
@@ -144,7 +144,7 @@ export default {
       }
     },
     validateCreateUserForm() {
-      return this.user.email != "";
+      return this.user.email != "" && this.user.firstName !=""
     },
   }
 };

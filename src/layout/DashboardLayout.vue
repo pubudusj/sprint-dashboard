@@ -15,6 +15,7 @@
         />
         <sidebar-item :link="{name: 'Current Sprint', icon: 'fa fa-columns text-primary', path: '/current-sprint'}"/>
         <sidebar-item :link="{name: 'Backlog', icon: 'fa fa-tasks text-red', path: '/backlog'}"/>
+        <sidebar-item :link="{name: 'Past Sprints', icon: 'fa fa-tasks text-default', path: '/archived'}"/>
         <sidebar-item :link="{name: 'Create Ticket', icon: 'fa fa-plus-square text-green', path: '/create-ticket'}"/>
         <div v-if="userIsAdmin" class="dropdown-divider"></div>
         <sidebar-item v-if="userIsAdmin" :link="{name: 'Create Sprint', icon: 'fa fa-folder-plus text-primary', path: '/create-sprint'}"/>

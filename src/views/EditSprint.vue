@@ -32,7 +32,7 @@
                     <div class="col-lg-4">
                       <base-input
                         alternative=""
-                        label="Sprint Name"
+                        label="Sprint Name *"
                         input-classes="form-control-alternative"
                         v-model="sprint.title"
                       />
@@ -40,14 +40,14 @@
                     <div class="col-lg-8">
                       <base-input
                         alternative=""
-                        label="Sprint Goal"
+                        label="Sprint Goal *"
                         input-classes="form-control-alternative"
                         v-model="sprint.description"
                       />
                     </div>
                   </div>
                   <div class="row date-row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-6">*
                     <template>
                       <v-md-date-range-picker
                         @change="handleDateChange"

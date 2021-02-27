@@ -29,7 +29,7 @@
                 sprint.endAt ? "To: " + formatTime(sprint.endAt) : ""
               }}</badge>
             </div>
-            <div class="col text-right">
+            <div class="text-right">
               <badge type="primary" class="sprint-points"
                 >Total Points: {{ sprintTotalPoints }}
               </badge>
@@ -38,8 +38,9 @@
                 v-if="isLoginUserAdmin && !sprint.archived"
                 :to="{ name: 'edit sprint', params: { id: sprint.id } }"
               >
-                <base-button size="sm" type="warning">Edit Sprint</base-button>
+                <base-button size="sm" type="primary">Edit Sprint</base-button>
               </router-link>
+              <base-button v-on:click="closeSprint"  v-if="isLoginUserAdmin && !sprint.archived" size="sm" type="danger">Close Sprint</base-button>
             </div>
           </div>
         </div>
@@ -267,6 +268,39 @@ export default {
     },
   },
   methods: {
+    closeSprint() {
+      console.log(this.sprint)
+      let conf = confirm('Please confirm if you need to close the sprint.');
+      if (conf) {
+        api.updateSprint({
+          id: this.sprint.id,
+          archived: true,
+          isCurrent: false,
+        }).then(() => {
+          this.sprint.tickets.items.forEach(function(ticket) {
+                if (ticket.ticket.status != "done") {
+                  api
+                    .removeTicketFromSprint({
+                      id: ticket.id,
+                    })
+                    .then(function() {
+                      api
+                        .updateTicket({
+                          id: ticket.ticket.id,
+                          status: "backlog",
+                        })
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                    });
+                }
+              });
+              setTimeout(() => this.$router.push("/backlog"), 500);
+        }).catch((e) => {
+          console.log(e)
+        })
+      }
+    },
     formatTime(timestamp) {
       try {
         let date = new Date(timestamp * 1000);
