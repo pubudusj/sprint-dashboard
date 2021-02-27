@@ -1,28 +1,44 @@
 <template>
   <div class="grid">
-    <article>
-      <div class="text">
-        <h3 class="dtask-title">
-          <b>{{ task.title }}</b>
-        </h3>
-        <badge class="badge-text" type="default">{{ task.points }}</badge>
-        <badge class="badge-text" :type="priorityIcon">{{
-          task.priority
-        }}</badge>
-        <badge class="badge-text" :type="taskTypeIcon.color">{{
-          task.type
-        }}</badge>
-        <badge
-          class="badge-text"
+    <stats-card
+      :title="task.title"
+      type="gradient-red"
+      class="mb-4 mb-xl-0"
+    >
+      <template slot="footer">
+        <span
+          :class="taskTypeIcon.text + ' mr-2'"
+          :title="getTypeTitle(task.type)"
+          ><i :class="taskTypeIcon.icon"></i>
+        </span>
+        <span class="mr-2" title="Prioriry"
+          ><badge :type="priorityIcon">{{
+            getPriorityTitle(task.priority)
+          }}</badge></span
+        >
+        <span class="mr-2" title="Story Points"
+          ><badge type="primary">{{ task.points }}</badge></span
+        >
+        <span
+          class="mr-2"
           :title="
             task.assignee
               ? task.assignee.firstname + ' ' + task.assignee.lastname
               : '--'
           "
-          >{{ assigneeInitials }}</badge
+          ><badge type="default"
+            ><i class="fa fa-user"></i> {{ assigneeInitials }}</badge
+          ></span
         >
-      </div>
-    </article>
+        <span class="mr-2">
+          <router-link :to="{ name: 'edit ticket', params: { id: task.id } }">
+            <base-button size="sm" type="primary"
+              ><i class="fa fa-edit"></i
+            ></base-button>
+          </router-link>
+        </span>
+      </template>
+    </stats-card>
   </div>
 </template>
 
@@ -37,20 +53,24 @@ export default {
   },
   computed: {
     taskTypeIcon() {
-      var icon = {
-        icon: "mdi-bookmark-check",
-        color: "primary",
-      };
+      let icon = "fa fa-check-square";
+      let text = "text-primary";
 
       if (this.task.type == "bug") {
-        icon = { icon: "mdi-bug", color: "danger" };
+        icon = "fa fa-bug text-danger";
+        text = "text-danger";
       } else if (this.task.type == "task") {
-        icon = { icon: "mdi-clipboard-check", color: "primary" };
+        icon = "fa fa-check text-primary";
+        text = "text-primary";
       } else if (this.task.type == "story") {
-        icon = { icon: "mdi-bookmark-check", color: "success" };
+        icon = "fa fa-bookmark text-success";
+        text = "text-success";
       }
 
-      return icon;
+      return {
+        icon: icon,
+        text: text,
+      };
     },
     priorityIcon() {
       var color = null;
@@ -73,6 +93,21 @@ export default {
         ? this.$options.filters.initials(this.task.assignee)
         : "--";
     },
+    ticketPriorities() {
+      return this.$store.getters.ticketPrioritiesList;
+    },
+    ticketTypes() {
+      return this.$store.getters.ticketTypesList;
+    },
+    getPriorityTitle() {
+      return (stage) => this.ticketPriorities.find((x) => x.id == stage).title;
+    },
+    getTypeTitle() {
+      return (stage) =>
+        this.ticketTypes.find((x) => x.id == stage)
+          ? this.ticketTypes.find((x) => x.id == stage).title
+          : "";
+    },
   },
   filters: {
     capitalize: function(value) {
@@ -94,72 +129,8 @@ export default {
   },
 };
 </script>
-
 <style scoped>
-.dtask-title {
-  padding: 10px 0 0 10px;
-  font-size: 16px;
-}
-
-.task-info {
-  display: flex;
-}
-
-.bug-type {
-  width: 40%;
-  float: left;
-}
-
-.priority {
-  width: 20%;
-  float: left;
-}
-
-.assignee {
-  width: 20%;
-  float: left;
-}
-
-.assignee .v-avatar {
-  color: rgb(255, 255, 255);
-  background-color: rgb(144, 170, 241);
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.story-points {
-  width: 20%;
-  display: flex;
-}
-
-.story-points .v-avatar {
-  color: rgb(17, 17, 2);
-  background-color: rgb(185, 185, 182);
-}
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 20px;
-  width: 250px;
-}
-.grid > article {
-  border: 1px solid #ccc;
-  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.3);
-  border-radius: 5px;
-  height: 120px;
-}
-.text {
-  padding: 0 20px 20px;
-}
-.text > button {
-  background: gray;
-  border: 0;
-  color: white;
-  padding: 10px;
-  width: 100%;
-}
-.badge-text {
-  font-size: 10px;
-  padding: 10px;
+  cursor: pointer;
 }
 </style>

@@ -22,6 +22,9 @@
               <badge type="primary" class="sprint-points"
                 >Total Points: {{ sprintTotalPoints }}
               </badge>
+              <span> </span>
+              <base-button v-if="!sprint.archived" size="sm" type="warning"
+              >Edit Sprint</base-button>
             </div>
           </div>
         </div>
@@ -273,7 +276,6 @@ export default {
       }
     },
     changeStage: function(stage, task) {
-      console.log(stage, task);
       api
         .updateTicket({
           id: task.ticket.id,
@@ -299,12 +301,18 @@ export default {
   margin: 0 5px;
   display: block;
   padding: 10px;
-  background-color: rgb(233, 231, 231);
+  background-color: rgba(155, 155, 155, 0.123);
   border-radius: 10px;
   min-height: 600px;
+}
+.task-card {
+  margin-bottom: 5px;
 }
 .task-card-wrapper {
   margin: 0 0 15px 0;
   min-width: 240px;
+}
+.sprint-points {
+  margin-right: 25px;
 }
 </style>
