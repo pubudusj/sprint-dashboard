@@ -56,10 +56,10 @@
                       <base-dropdown>
                         <template v-slot:title>
                           <base-button type="secondary" class="dropdown-toggle">
-                            {{ ticket.type.title }}
+                            <i :class="typeIcon(ticket.type.id)"></i> {{ ticket.type.title }}
                           </base-button>
                         </template>
-                          <div v-for="type in typesList" v-on:click="assignType(type)" :key="type.id" class="dropdown-item">{{ type.title }}</div>
+                          <div v-for="type in typesList" v-on:click="assignType(type)" :key="type.id" class="dropdown-item"><i :class="typeIcon(type.id)"></i>{{ type.title }}</div>
                       </base-dropdown>
                     </div>
                     <div class="col-lg-4">
@@ -67,10 +67,10 @@
                       <base-dropdown>
                         <template v-slot:title>
                           <base-button type="secondary" class="dropdown-toggle">
-                            {{ ticket.priority.title }}
+                            <badge :type="priorityIcon(ticket.priority.id)">{{ ticket.priority.title }}</badge>
                           </base-button>
                         </template>
-                        <div v-for="priority in prioritiesList" v-on:click="assignPriority(priority)" :key="priority.id" class="dropdown-item">{{ priority.title }}</div>
+                        <div v-for="priority in prioritiesList" v-on:click="assignPriority(priority)" :key="priority.id" class="dropdown-item"><badge :type="priorityIcon(priority.id)">{{ priority.title }}</badge></div>
                       </base-dropdown>
                     </div>
                     <div class="col-lg-4">
@@ -254,6 +254,32 @@ export default {
       let self = this
       self.ticket.sprint = sprints[0]
       return sprints.filter((x) => x.archived == false)
+    },
+    typeIcon: function() {
+      return (type) => {
+        if (type === 'bug') {
+          return 'fa fa-bug text-danger';
+        }else if (type === 'task') {
+          return 'fa fa-check text-primary';
+        } else if (type === 'story') {
+          return 'fa fa-bookmark text-success';
+        }
+      }
+    },
+    priorityIcon: function() {
+      return (priority) => {
+          if (priority === 'highest') {
+          return 'danger';
+        }else if (priority === 'high') {
+          return 'warning';
+        } else if (priority === 'medium') {
+          return 'info';
+        } else if (priority === 'low') {
+          return 'primary';
+        } else if (priority === 'lowest') {
+          return 'success';
+        }
+      }
     }
   },
 };

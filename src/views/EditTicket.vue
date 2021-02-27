@@ -58,7 +58,7 @@
                       <base-dropdown>
                         <template v-slot:title>
                           <base-button type="secondary" class="dropdown-toggle">
-                            {{ ticket.type.title }}
+                            <i :class="typeIcon(ticket.type.id)"></i> {{ ticket.type.title }}
                           </base-button>
                         </template>
                         <div
@@ -67,7 +67,7 @@
                           :key="type.id"
                           class="dropdown-item"
                         >
-                          {{ type.title }}
+                          <i :class="typeIcon(type.id)"></i>{{ type.title }}
                         </div>
                       </base-dropdown>
                     </div>
@@ -78,7 +78,7 @@
                       <base-dropdown>
                         <template v-slot:title>
                           <base-button type="secondary" class="dropdown-toggle">
-                            {{ ticket.priority.title }}
+                            <badge :type="priorityIcon(ticket.priority.id)">{{ ticket.priority.title }}</badge>
                           </base-button>
                         </template>
                         <div
@@ -87,7 +87,7 @@
                           :key="priority.id"
                           class="dropdown-item"
                         >
-                          {{ priority.title }}
+                          <badge :type="priorityIcon(priority.id)">{{ priority.title }}</badge>
                         </div>
                       </base-dropdown>
                     </div>
@@ -263,6 +263,32 @@ export default {
       ].concat(this.$store.getters.ticketAssignees);
       return assignees;
     },
+    typeIcon: function() {
+      return (type) => {
+        if (type === 'bug') {
+          return 'fa fa-bug text-danger';
+        }else if (type === 'task') {
+          return 'fa fa-check text-primary';
+        } else if (type === 'story') {
+          return 'fa fa-bookmark text-success';
+        }
+      }
+    },
+    priorityIcon: function() {
+      return (priority) => {
+          if (priority === 'highest') {
+          return 'danger';
+        }else if (priority === 'high') {
+          return 'warning';
+        } else if (priority === 'medium') {
+          return 'info';
+        } else if (priority === 'low') {
+          return 'primary';
+        } else if (priority === 'lowest') {
+          return 'success';
+        }
+      }
+    }
   },
 };
 </script>

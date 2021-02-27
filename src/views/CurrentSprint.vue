@@ -34,7 +34,7 @@
           <div class="col stage-column">
             <div class="col-header">
               <div class="text-left col-lg-10">
-                <h3 dark color="blue">To Do</h3>
+                <h3 class="stage-title" dark color="blue">To Do</h3>
               </div>
               <div class="task-count text-right col-lg-2" title="story points">
                 <badge>{{ storyPoints("todo") }}</badge>
@@ -61,7 +61,7 @@
           <div class="col stage-column">
             <div class="col-header">
               <div class="text-left col-lg-10">
-                <h3 dark color="blue">In Progress</h3>
+                <h3 class="stage-title" dark color="blue">In Progress</h3>
               </div>
               <div class="task-count text-right col-lg-2" title="story points">
                 <badge>{{ storyPoints("inprogress") }}</badge>
@@ -89,7 +89,7 @@
             <div min-width="275" max-width="275">
               <div class="col-header">
                 <div class="text-left col-lg-10">
-                  <h3 dark color="blue">Review</h3>
+                  <h3 class="stage-title" dark color="blue">Review</h3>
                 </div>
                 <div
                   class="task-count text-right col-lg-2"
@@ -123,7 +123,7 @@
             <div min-width="275" max-width="275">
               <div class="col-header">
                 <div class="text-left col-lg-10">
-                  <h3 dark color="blue">Test</h3>
+                  <h3 class="stage-title" dark color="blue">Testing</h3>
                 </div>
                 <div
                   class="task-count text-right col-lg-2"
@@ -157,7 +157,7 @@
             <div min-width="275" max-width="275">
               <div class="col-header">
                 <div class="text-left col-lg-10">
-                  <h3 dark color="blue">Done</h3>
+                  <h3 class="stage-title" dark color="blue">Done</h3>
                 </div>
                 <div
                   class="task-count text-right col-lg-2"
@@ -314,5 +314,9 @@ export default {
 }
 .sprint-points {
   margin-right: 25px;
+}
+.stage-title {
+  font-variant-caps: all-small-caps;
+  font-size: 20px;
 }
 </style>
