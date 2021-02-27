@@ -96,6 +96,15 @@ const routes = [
           import("./views/EditTicket.vue"),
       },
       {
+        path: "/current-sprint",
+        name: "Current Sprint",
+        meta: {
+          requiredAuth: true,
+        },
+        component: () =>
+          import("./views/CurrentSprint.vue"),
+      },
+      {
         path: "/backlog",
         name: "Backlog",
         meta: {

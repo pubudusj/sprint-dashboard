@@ -13,6 +13,7 @@
             path: '/dashboard'
           }"
         />
+        <sidebar-item :link="{name: 'Current Sprint', icon: 'ni ni-circle-08 text-pink', path: '/current-sprint'}"/>
         <sidebar-item :link="{name: 'Backlog', icon: 'ni ni-circle-08 text-pink', path: '/backlog'}"/>
         <sidebar-item :link="{name: 'Create Ticket', icon: 'ni ni-circle-08 text-pink', path: '/create-ticket'}"/>
 
