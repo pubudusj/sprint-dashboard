@@ -46,26 +46,25 @@
                       />
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row date-row">
                     <div class="col-lg-6">
-                      <base-input
-                        alternative=""
-                        label="Start Date"
-                        input-classes="form-control-alternative"
-                        v-model="sprint.startAt"
-                      />
-                    </div>
-                    <div class="col-lg-6">
-                      <base-input
-                        alternative=""
-                        label="End Date"
-                        input-classes="form-control-alternative"
-                        v-model="sprint.endAt"
-                      />
+                    <template>
+                      <v-md-date-range-picker
+                        @change="handleDateChange"
+                        :start-date="datePickerStartDate"
+                        :end-date="datePickerEndDate"
+                      ></v-md-date-range-picker>
+                    </template>
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-lg-6" v-if="!currentSprint || (currentSprint && currentSprint.id == sprint.id)">
+                    <div
+                      class="col-lg-6"
+                      v-if="
+                        !currentSprint ||
+                          (currentSprint && currentSprint.id == sprint.id)
+                      "
+                    >
                       <base-checkbox
                         :value="sprint.isCurrent"
                         class="mb-3"
@@ -82,7 +81,9 @@
                         ><b>Set as archived ?</b>
                         {{ sprint.archived ? "Yes" : "No" }}</base-checkbox
                       >
-                      <span class="text-sm text-warning mb-3">* All tickets will be moved to backlog</span>
+                      <span class="text-sm text-warning mb-3"
+                        >* All tickets will be moved to backlog</span
+                      >
                     </div>
                   </div>
                   <button v-on:click="updateSprint" class="btn btn-info">
@@ -100,7 +101,12 @@
 
 <script>
 import api from "./../api/api";
-import { Hub } from 'aws-amplify'
+import { Hub } from "aws-amplify";
+import Vue from 'vue';
+import VMdDateRangePicker from "v-md-date-range-picker";
+import moment from 'moment'
+
+Vue.use(VMdDateRangePicker);
 
 export default {
   name: "create-user",
@@ -110,6 +116,10 @@ export default {
     };
   },
   methods: {
+    handleDateChange (values) {
+      this.sprint.startAt = values[0].unix()
+      this.sprint.endAt = values[1].unix()
+    },
     async updateSprint() {
       this.message = null;
 
@@ -120,7 +130,8 @@ export default {
         };
       } else {
         let updateSprint = {
-          isCurrent: this.sprint.archived == true ? false : this.sprint.isCurrent,
+          isCurrent:
+            this.sprint.archived == true ? false : this.sprint.isCurrent,
           archived: this.sprint.archived,
           startAt: parseInt(this.sprint.startAt),
           endAt: parseInt(this.sprint.endAt),
@@ -132,15 +143,17 @@ export default {
         api
           .updateSprint(updateSprint)
           .then(() => {
-            // Update tickets
-            if (this.sprint.archived == true && this.sprint.tickets.items.length > 0) {
+            if (
+              this.sprint.archived == true &&
+              this.sprint.tickets.items.length > 0
+            ) {
               this.sprint.tickets.items.forEach(function(ticket) {
-                console.log(ticket)
-                api
-                  .removeTicketFromSprint({
-                    id: ticket.id,
-                  })
-                  .then(function() {
+                if (ticket.ticket.status != "done") {
+                  api
+                    .removeTicketFromSprint({
+                      id: ticket.id,
+                    })
+                    .then(function() {
                       api
                         .updateTicket({
                           id: ticket.ticket.id,
@@ -153,17 +166,19 @@ export default {
                             message: "",
                           });
                         });
-              }).catch((e) => {
-                console.log(e)
-              })
-            })
+                    })
+                    .catch((e) => {
+                      console.log(e);
+                    });
+                }
+              });
             }
 
             this.message = {
               message: "Sprint updated successfully.",
               type: "success",
             };
-            setTimeout(() => this.$router.push('/backlog'), 500)
+            setTimeout(() => this.$router.push("/backlog"), 500);
           })
           .catch((e) => {
             console.log(e);
@@ -184,13 +199,36 @@ export default {
     },
   },
   computed: {
+    datePickerStartDate() {
+      try {
+          let date = new Date(this.sprint.startAt * 1000);
+          return moment(date).format("YYYY-MM-DD");
+      } catch {
+        return moment().format("YYYY-MM-DD");
+      }
+    },
+    datePickerEndDate() {
+      try {
+          let date = new Date(this.sprint.endAt * 1000);
+          return moment(date).format("YYYY-MM-DD");
+      } catch {
+        return moment().format("YYYY-MM-DD");
+      }
+    },
     sprint() {
       return this.$store.getters.getSprintById(this.$route.params.id);
     },
     currentSprint() {
-      return this.$store.getters.currentSprint
-    }
+      return this.$store.getters.currentSprint;
+    },
   },
 };
 </script>
-<style></style>
+<style scoped>
+.activator-wrapper {
+  color: red !important;
+}
+.date-row {
+  margin: 30px 0;
+}
+</style>

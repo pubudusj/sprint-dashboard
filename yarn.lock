@@ -2179,6 +2179,65 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+"@material/animation@^0.40.1":
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/@material/animation/-/animation-0.40.1.tgz#c5ff31e7d7e17324a0045e889d3530b150b9fcec"
+  integrity sha512-HtxFUw04EHg4S6pXfTA3Z0wKxnNDNcDhe1Np2Y2geo+lAk2Hb7m8yCL/GaL9o2I/eRYsgUXC0U7+Mk74GCz3zw==
+
+"@material/base@^0.40.1":
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/@material/base/-/base-0.40.1.tgz#a0d8e19cee98dae0f96dbf0887a14b3f7acd2aac"
+  integrity sha512-vrbOK8hONVCYgURQ9h7nkXvMdYnZVVNmAfFFijF8fbWQdwnoPcNTdqV6RoQlhBEqHYHQqLNfdUDlznAPKLclGQ==
+
+"@material/button@^0.40.0":
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/@material/button/-/button-0.40.1.tgz#b5a8657f7d3783d7fc0936f95d0187bdb0319eae"
+  integrity sha512-xLNjq9zySnpZAP4UynyeXnnlLXf3iIA/6ilecwgF4d2ooUmNXcRdlRa8wGYT36JHsCfsP3AeZOjoTZUcmaiejw==
+  dependencies:
+    "@material/elevation" "^0.40.1"
+    "@material/ripple" "^0.40.1"
+    "@material/rtl" "^0.40.1"
+    "@material/shape" "^0.40.1"
+    "@material/theme" "^0.40.1"
+    "@material/typography" "^0.40.1"
+
+"@material/elevation@^0.40.1":
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/@material/elevation/-/elevation-0.40.1.tgz#beb17eb90bde94459c41cd826c2de13f13b10b25"
+  integrity sha512-VD9ii90WzI+t4df08A9hQIsYLH/N+85a2Mqo10CNVZLZYW5fDOwFH/h7553aNoAuSHKPcGCLdyav9J9oC6TSaQ==
+  dependencies:
+    "@material/animation" "^0.40.1"
+    "@material/theme" "^0.40.1"
+
+"@material/ripple@^0.40.1":
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/@material/ripple/-/ripple-0.40.1.tgz#57cbc689303b48282229cb9b62556af7442e852a"
+  integrity sha512-sndeTS4VHa0v1UGj7MNcxMCuO9LJ1DjoL1EjE6BH3Lm3M1MnXJHdsBo2CgPbU/FI84tt6+eyHGOYPdPrEDJhCA==
+  dependencies:
+    "@material/animation" "^0.40.1"
+    "@material/base" "^0.40.1"
+    "@material/theme" "^0.40.1"
+
+"@material/rtl@^0.40.1":
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/@material/rtl/-/rtl-0.40.1.tgz#5b0d973e3c6f8e2ea3656c06ada37ba2fedfa206"
+  integrity sha512-Pk6Iw1/KrhWZoZtkDsPMDUW0bm7Z1zeXb3MTQRCFmjf1wU5cRxgOTtuoZLcJqlcKGppLAzJL/TJV3E7KEiuL0A==
+
+"@material/shape@^0.40.1":
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/@material/shape/-/shape-0.40.1.tgz#bd4224902896c3d45fab353d788fe6c4866483a8"
+  integrity sha512-o1pw5+s/jWqsKbUAkCCaEcB8XLqJ4FlZhYfSvxZ88WRw9zoWOt9iQMMP82wLWhUX1DSzpNRI8BAD7aNLK6yRlA==
+
+"@material/theme@^0.40.1":
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/@material/theme/-/theme-0.40.1.tgz#3cc3f1bf87ee9581df03e347a1979e53ae617221"
+  integrity sha512-cH1CsGIDisEQ2oroZhLTypV0Ir00x3WIwFXnPo7qv3832tuIDkZY623U3rUax6KNPz4Hh1j0tNpTwgrNZwvwWA==
+
+"@material/typography@^0.40.1":
+  version "0.40.1"
+  resolved "https://registry.yarnpkg.com/@material/typography/-/typography-0.40.1.tgz#68ecb767f7c54ca2f4053cccdd1c4a0198e60f9b"
+  integrity sha512-LkW2tAsId8zGKxGA5VIFXV/D1h4vCHQIuALRMaDpHbNGffgr2ubtJNvCh2EQkm19MTv4igVLEjn1Svh0dXcTpA==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -7375,7 +7434,7 @@ mixin-deep@^1.2.0:
   dependencies:
     minimist "^1.2.5"
 
-moment@^2.10.2:
+moment@^2.10.2, moment@^2.22.2, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -10363,6 +10422,14 @@ uuid@^3.0.0, uuid@^3.2.1, uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
+
+v-md-date-range-picker@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/v-md-date-range-picker/-/v-md-date-range-picker-2.6.0.tgz#f077af87d6728bd83db287900b59de1ee864e641"
+  integrity sha512-SkfP2mjTChPimbayJ/n5KP2ltjs1wOK94HFNcam0a85kpofAEEKqQ8QVESzr1S7darBukf6qFPjnCA7XLvOcqw==
+  dependencies:
+    "@material/button" "^0.40.0"
+    moment "^2.22.2"
 
 v8-compile-cache@^2.0.3:
   version "2.2.0"

@@ -11,26 +11,39 @@
           <div class="row align-items-center">
             <div class="col">
               <h3 class="mb-0">Current Sprint - {{ this.sprint.title }}</h3>
-              <div class="text-sm"><b>Goal: </b>{{ this.sprint.description }}</div>
+              <div class="text-sm">
+                <b>Goal: </b>{{ this.sprint.description }}
+              </div>
             </div>
             <div class="col text-right">
               <h5 class="mb-0"></h5>
             </div>
             <div class="col text-right">
               <h5 class="mb-0"></h5>
+            </div>
+            <div class="text-right">
+              <badge type="default" class="sprint-points text-small">{{
+                sprint.startAt ? "From: " + formatTime(sprint.startAt) : ""
+              }}</badge>
+              <badge type="default" class="sprint-points text-small">{{
+                sprint.endAt ? "To: " + formatTime(sprint.endAt) : ""
+              }}</badge>
             </div>
             <div class="col text-right">
               <badge type="primary" class="sprint-points"
                 >Total Points: {{ sprintTotalPoints }}
               </badge>
               <span> </span>
-             <router-link v-if="isLoginUserAdmin && !sprint.archived" :to="{ name: 'edit sprint', params: { id: sprint.id } }">
-              <base-button  size="sm" type="warning">Edit Sprint</base-button>
+              <router-link
+                v-if="isLoginUserAdmin && !sprint.archived"
+                :to="{ name: 'edit sprint', params: { id: sprint.id } }"
+              >
+                <base-button size="sm" type="warning">Edit Sprint</base-button>
               </router-link>
             </div>
           </div>
         </div>
-        
+
         <div v-if="noSprint" class="card-header border-0">
           <base-alert type="danger">
             <strong>No active sprint found.</strong>
@@ -205,6 +218,7 @@ import TaskCard from "./TaskCard.vue";
 import Badge from "../components/Badge.vue";
 import draggable from "vuedraggable";
 import api from "./../api/api";
+import moment from "moment";
 
 export default {
   data() {
@@ -224,7 +238,7 @@ export default {
       return this.noCurrentSprint;
     },
     isLoginUserAdmin() {
-      return this.$store.getters.isLoginUserAdmin
+      return this.$store.getters.isLoginUserAdmin;
     },
     sprintTotalPoints() {
       return this.tickets.reduce((r, d) => r + parseInt(d.ticket.points), 0);
@@ -253,13 +267,21 @@ export default {
     },
   },
   methods: {
+    formatTime(timestamp) {
+      try {
+        let date = new Date(timestamp * 1000);
+        return moment(date).format("YYYY-MM-DD");
+      } catch {
+        return timestamp;
+      }
+    },
     fetchData() {
-      let currentSprint = this.$store.getters.currentSprint
+      let currentSprint = this.$store.getters.currentSprint;
       if (currentSprint) {
-        this.sprint = currentSprint
+        this.sprint = currentSprint;
         this.tickets = this.sprint.tickets.items;
       } else {
-        this.noCurrentSprint = true
+        this.noCurrentSprint = true;
       }
     },
     getTicketsByStage(stage) {

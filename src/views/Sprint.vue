@@ -1,26 +1,24 @@
 <template>
   <div class="card mb-4">
-    <div class="card-header border-0">
+    <div class="card-header border-1">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0">{{ sprint.title }}</h3>
+          <h3 class="mb-0">{{ sprint.title }}<span v-if="sprint.isCurrent" class="col">
+          <router-link :to="{name: 'current sprint'}"><badge type="info">Current Sprint</badge></router-link>
+        </span></h3>
           <div class="text-sm text-muted"><b>Goal: </b>{{ sprint.description }}</div>
         </div>
-        <div v-if="sprint.isCurrent" class="col">
-          <badge type="info">Current Sprint</badge>
-        </div>
+        
         <div v-if="sprint.archived" class="col">
           <badge type="danger">Archived</badge>
         </div>
         <div class="col text-right">
-          <h5 class="mb-0">
-            {{ sprint.startAt ? "From -" + sprint.startAt : "" }}
-          </h5>
-        </div>
-        <div class="col text-right">
-          <h5 class="mb-0">{{ sprint.endAt ? "To -" + sprint.endAt : "" }}</h5>
-        </div>
-        <div class="col text-right">
+          <badge type="default" class="sprint-points text-small"
+            >{{ sprint.startAt ? "From: " + formatTime(sprint.startAt) : "" }}</badge
+          >
+          <badge type="default" class="sprint-points text-small"
+            >{{ sprint.endAt ? "To: " + formatTime(sprint.endAt) : "" }}</badge
+          >
           <badge type="primary" class="sprint-points"
             >Total Points: {{ sprintPoints }}</badge
           >
@@ -111,6 +109,7 @@
 <script>
 import api from "./../api/api";
 import { Hub } from "aws-amplify";
+import moment from 'moment'
 
 export default {
   name: "sprint",
@@ -202,6 +201,16 @@ export default {
     }
   },
   methods: {
+    formatTime(timestamp) {
+      try {
+        
+      let date = new Date(timestamp * 1000);
+      return moment(date).format("YYYY-MM-DD");
+      }
+      catch{
+        return timestamp;
+      }
+    },
     moveTicket(ticketId, relationId, to) {
       api
         .removeTicketFromSprint({

@@ -46,27 +46,22 @@
                       />
                     </div>
                   </div>
-                  <div class="row">
+                  <div class="row date-row">
                     <div class="col-lg-6">
-                      <base-input
-                        alternative=""
-                        label="Start Date"
-                        input-classes="form-control-alternative"
-                        v-model="sprint.startAt"
-                      />
-                    </div>
-                    <div class="col-lg-6">
-                      <base-input
-                        alternative=""
-                        label="End Date"
-                        input-classes="form-control-alternative"
-                        v-model="sprint.endAt"
-                      />
+                    <template>
+                      <v-md-date-range-picker
+                        @change="handleDateChange"
+                      ></v-md-date-range-picker>
+                    </template>
                     </div>
                   </div>
-                  <button v-on:click="createSprint" class="btn btn-info">
-                    Create
-                  </button>
+                  <div class="row">
+                    <div class="col-lg-6">
+                    <button v-on:click="createSprint" class="btn btn-info">
+                      Create
+                    </button>
+                    </div>
+                  </div>
                 </div>
               </form>
             </template>
@@ -79,6 +74,10 @@
 
 <script>
 import api from "./../api/api";
+import Vue from 'vue';
+import VMdDateRangePicker from "v-md-date-range-picker";
+
+Vue.use(VMdDateRangePicker);
 
 export default {
   name: "create-user",
@@ -94,6 +93,10 @@ export default {
     };
   },
   methods: {
+    handleDateChange (values) {
+      this.sprint.startAt = values[0].unix()
+      this.sprint.endAt = values[1].unix()
+    },
     async createSprint() {
       this.message = null;
 
@@ -149,4 +152,8 @@ export default {
   },
 };
 </script>
-<style></style>
+<style scoped>
+  .date-row {
+    margin: 30px 0;
+  }
+</style>
