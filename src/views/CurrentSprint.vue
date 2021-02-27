@@ -319,7 +319,9 @@ export default {
           status: stage,
         })
         .then(() => {
-          this.fetchData();
+          this.$store.dispatch('fetchAllSprints').then(() => {
+            this.fetchData();
+          })
         });
     },
   },
