@@ -97,7 +97,7 @@ const routes = [
       },
       {
         path: "/current-sprint",
-        name: "Current Sprint",
+        name: "current sprint",
         meta: {
           requiredAuth: true,
         },

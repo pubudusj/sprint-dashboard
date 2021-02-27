@@ -3,42 +3,43 @@
     <div class="card-header border-0">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0">My Tickets</h3>
+          <h3 class="mb-0">My Tickets in current sprint</h3>
         </div>
         <div class="col text-right">
-          <a href="#!" class="btn btn-sm btn-primary">See all</a>
+          <router-link :to="{ name: 'current sprint'}" class="btn btn-sm btn-primary">See all</router-link>
         </div>
       </div>
     </div>
-
     <div class="table-responsive">
       <base-table thead-classes="thead-light"
-                  :data="tableData">
+                  :data="tickets">
         <template slot="columns">
-          <th>Page name</th>
-          <th>Visitors</th>
-          <th>Unique users</th>
-          <th>Bounce rate</th>
+          <th>Title</th>
+          <th>Type</th>
+          <th>Priority</th>
+          <th>Points</th>
+          <th></th>
         </template>
 
         <template slot-scope="{row}">
           <th scope="row">
-            {{row.page}}
+            {{row.ticket.title}}
           </th>
           <td>
-            {{row.visitors}}
+            {{ getTypeTitle(row.ticket.type) }}
           </td>
           <td>
-            {{row.unique}}
+            {{ getPriorityTitle(row.ticket.priority) }}
           </td>
           <td>
-            <i class="fas fa-arrow-up text-success mr-3"
-               :class="row.bounceRateDirection === 'up' ? 'text-success': 'text-danger'">
-            </i>
-            {{row.bounceRate}}
+            {{row.ticket.points}}
+          </td>
+          <td>
+            <base-button size="sm" type="secondary">
+                  View
+            </base-button>
           </td>
         </template>
-
       </base-table>
     </div>
 
@@ -47,46 +48,23 @@
 <script>
   export default {
     name: 'my-tickets',
-    data() {
-      return {
-        tableData: [
-          {
-            page: '/argon/',
-            visitors: '4,569',
-            unique: '340',
-            bounceRate: '46,53%',
-            bounceRateDirection: 'up'
-          },
-          {
-            page: '/argon/index.html',
-            visitors: '3,985',
-            unique: '319',
-            bounceRate: '46,53%',
-            bounceRateDirection: 'down'
-          },
-          {
-            page: '/argon/charts.html',
-            visitors: '3,513',
-            unique: '294',
-            bounceRate: '36,49%',
-            bounceRateDirection: 'down'
-          },
-          {
-            page: '/argon/tables.html',
-            visitors: '2,050',
-            unique: '147',
-            bounceRate: '50,87%',
-            bounceRateDirection: 'up'
-          },
-          {
-            page: '/argon/profile.html',
-            visitors: '1,795',
-            unique: '190',
-            bounceRate: '46,53%',
-            bounceRateDirection: 'down'
-          }
-        ]
-      }
+    props: ["tickets"],
+    computed: {
+      ticketPriorities() {
+        return this.$store.getters.ticketPrioritiesList;
+      },
+      ticketTypes() {
+        return this.$store.getters.ticketTypesList;
+      },
+      getPriorityTitle() {
+        return (stage) => this.ticketPriorities.find((x) => x.id == stage).title;
+      },
+      getTypeTitle() {
+        return (stage) =>
+          this.ticketTypes.find((x) => x.id == stage)
+            ? this.ticketTypes.find((x) => x.id == stage).title
+            : "";
+      },
     }
   }
 </script>

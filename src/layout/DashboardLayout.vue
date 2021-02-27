@@ -9,22 +9,17 @@
         <sidebar-item
           :link="{
             name: 'Dashboard',
-            icon: 'ni ni-tv-2 text-primary',
+            icon: 'fa fa-tv text-primary',
             path: '/dashboard'
           }"
         />
-        <sidebar-item :link="{name: 'Current Sprint', icon: 'ni ni-circle-08 text-pink', path: '/current-sprint'}"/>
-        <sidebar-item :link="{name: 'Backlog', icon: 'ni ni-circle-08 text-pink', path: '/backlog'}"/>
-        <sidebar-item :link="{name: 'Create Ticket', icon: 'ni ni-circle-08 text-pink', path: '/create-ticket'}"/>
-
-        <!-- <sidebar-item :link="{name: 'Icons', icon: 'ni ni-planet text-blue', path: '/icons'}"/>
-        <sidebar-item :link="{name: 'Maps', icon: 'ni ni-pin-3 text-orange', path: '/maps'}"/> -->
+        <sidebar-item :link="{name: 'Current Sprint', icon: 'fa fa-columns text-primary', path: '/current-sprint'}"/>
+        <sidebar-item :link="{name: 'Backlog', icon: 'fa fa-tasks text-red', path: '/backlog'}"/>
+        <sidebar-item :link="{name: 'Create Ticket', icon: 'fa fa-plus-square text-green', path: '/create-ticket'}"/>
         <div v-if="userIsAdmin" class="dropdown-divider"></div>
-        <sidebar-item v-if="userIsAdmin" :link="{name: 'Create Sprint', icon: 'ni ni-circle-08 text-pink', path: '/create-sprint'}"/>
-        <sidebar-item v-if="userIsAdmin" :link="{name: 'Create User', icon: 'ni ni-circle-08 text-pink', path: '/create-user'}"/>
-        <sidebar-item v-if="userIsAdmin" :link="{name: 'Manage Users', icon: 'ni ni-circle-08 text-pink', path: '/users'}"/>
-        <!-- <sidebar-item :link="{name: 'Tables', icon: 'ni ni-bullet-list-67 text-red', path: '/tables'}"/>
-        <sidebar-item :link="{name: 'Login', icon: 'ni ni-key-25 text-info', path: '/login'}"/> -->
+        <sidebar-item v-if="userIsAdmin" :link="{name: 'Create Sprint', icon: 'fa fa-folder-plus text-primary', path: '/create-sprint'}"/>
+        <sidebar-item v-if="userIsAdmin" :link="{name: 'Create User', icon: 'fa fa-user-plus text-purple', path: '/create-user'}"/>
+        <sidebar-item v-if="userIsAdmin" :link="{name: 'Manage Users', icon: 'fa fa-user-cog text-red', path: '/users'}"/>
         <div class="dropdown-divider"></div>
         <sidebar-item :link="{name: 'My Profile', icon: 'ni ni-single-02 text-yellow', path: '/profile'}"/>
 
@@ -34,7 +29,7 @@
       <dashboard-navbar></dashboard-navbar>
 
       <div @click="toggleSidebar">
-        <fade-transition :duration="200" origin="center top" mode="out-in">
+        <fade-transition :duration="200" class="main" origin="center top" mode="out-in">
           <!-- your content here -->
           <router-view></router-view>
         </fade-transition>
@@ -74,4 +69,7 @@
   };
 </script>
 <style lang="scss">
+.main {
+  min-height: 700px;
+}
 </style>

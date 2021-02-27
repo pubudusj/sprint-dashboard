@@ -14,7 +14,7 @@
         <base-dropdown class="nav-link pr-0">
           <div class="media align-items-center usericon" slot="title">
             <span class="avatar avatar-sm rounded-circle">
-              <i class="ni ni-single-02"></i>
+              <i class="fa fa-user"></i>
             </span>
             <div class="media-body ml-2 d-none d-lg-block">
               <span class="mb-0 text-sm  font-weight-bold">{{
@@ -28,24 +28,12 @@
               <h6 class="text-overflow m-0">Welcome!</h6>
             </div>
             <router-link to="/profile" class="dropdown-item">
-              <i class="ni ni-single-02"></i>
+              <i class="fa fa-user text-primary"></i>
               <span>My profile</span>
             </router-link>
-            <!-- <router-link to="/profile" class="dropdown-item">
-              <i class="ni ni-settings-gear-65"></i>
-              <span>Settings</span>
-            </router-link>
-            <router-link to="/profile" class="dropdown-item">
-              <i class="ni ni-calendar-grid-58"></i>
-              <span>Activity</span>
-            </router-link>
-            <router-link to="/profile" class="dropdown-item">
-              <i class="ni ni-support-16"></i>
-              <span>Support</span>
-            </router-link> -->
             <div class="dropdown-divider"></div>
             <router-link to="/logout" class="dropdown-item">
-              <i class="ni ni-user-run"></i>
+              <i class="fa fa-sign-out-alt text-red"></i>
               <span>Logout</span>
             </router-link>
           </template>
