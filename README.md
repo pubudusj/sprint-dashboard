@@ -1,20 +1,20 @@
 # [MySprintDashboard](https://dashboard.pubudu.dev)
 
-This repository is contains the project I build using AWS Amplify, Vue, GraphQL. You may find the detail explanation in my blog post [here](https://hashnode.com)
+This repository is contains the project I build using AWS Amplify, Vue, GraphQL. You may find the detail explanation in my blog post [here](https://pubudu.hashnode.dev/sprint-dashboard-with-aws-amplify)
 
 **Screenshots**
 
 Login:
-![](github-resources/login-screen.png){:height="50%" width="50%"}
+![](github-resources/login-screen.png)
 
 Dashboard:
-![Dashboard](github-resources/dashboard.png){:height="50%" width="50%"}
+![Dashboard](github-resources/dashboard.png)
 
 Current Sprint:
-![Current Sprint](github-resources/current-sprint.png){:height="50%" width="50%"}
+![Current Sprint](github-resources/current-sprint.png)
 
 Backlog:
-![Backlog](github-resources/backlog.png){:height="50%" width="50%"}
+![Backlog](github-resources/backlog.png)
 
 
 ## Demo
